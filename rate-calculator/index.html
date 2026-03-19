@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free fractional consultant rate calculator. Enter your income goal and get your ideal hourly rate, package prices, and revenue scenarios instantly.">
+<meta property="og:title" content="Fractional Consultant Rate Calculator — Free Tool">
+<meta property="og:description" content="Calculate your ideal consulting rates in seconds. Free, no signup, instant results.">
+<title>Fractional Consultant Rate Calculator — C-Suite Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:        #080C10;
+    --surface:   #0E1318;
+    --surface2:  #141A21;
+    --border:    #1E2730;
+    --border2:   #263040;
+    --accent:    #4F9EFF;
+    --accent2:   #7BB8FF;
+    --accent-bg: rgba(79,158,255,0.07);
+    --accent-border: rgba(79,158,255,0.25);
+    --text:      #E8EEF5;
+    --text2:     #8A99A8;
+    --text3:     #4A5568;
+    --success:   #34D399;
+    --warning:   #FBBF24;
+    --danger:    #F87171;
+    --gold:      #F0B429;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Background grid ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,158,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,158,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 58px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo span.icon {
+    width: 30px;
+    height: 30px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+
+  .nav-links .btn-cta {
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    background: var(--accent-bg);
+  }
+
+  .nav-links .btn-cta:hover {
+    background: rgba(79,158,255,0.15);
+    color: var(--accent2);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 64px 24px 48px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-badge-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #E8EEF5 0%, #8A99A8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: var(--text2);
+    font-weight: 400;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 24px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.2s ease;
+  }
+
+  .card:hover { border-color: var(--border2); }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title i { color: var(--accent); font-size: 12px; }
+
+  /* ── INPUTS ── */
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-group:last-child { margin-bottom: 0; }
+
+  .input-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .input-label span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+  }
+
+  .input-label .input-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    height: 46px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 16px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79,158,255,0.1);
+  }
+
+  select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A99A8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+  input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: var(--border2);
+    border-radius: 99px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+  .helper { font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  /* ── RESULTS CARD ── */
+  .results-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .results-header {
+    background: var(--accent-bg);
+    border-bottom: 1px solid var(--accent-border);
+    padding: 20px 28px;
+  }
+
+  .results-header .card-title { margin-bottom: 0; color: var(--accent); }
+
+  .results-body { padding: 28px; }
+
+  .primary-result {
+    text-align: center;
+    padding: 28px 20px;
+    margin-bottom: 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .primary-result .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .primary-result .value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -2px;
+    transition: all 0.3s ease;
+  }
+
+  .primary-result .sublabel {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 6px;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .result-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color 0.15s ease;
+  }
+
+  .result-item:hover { border-color: var(--border2); }
+
+  .result-item .r-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .result-item .r-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .result-item .r-value.positive { color: var(--success); }
+  .result-item .r-value.gold { color: var(--gold); }
+
+  /* ── PACKAGES TABLE ── */
+  .packages-section { margin-top: 8px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .section-label i { color: var(--accent); }
+
+  .package-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s ease;
+  }
+
+  .package-row:hover { border-color: var(--border2); }
+  .package-row:last-child { margin-bottom: 0; }
+
+  .pkg-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .pkg-days {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+
+  .pkg-price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: right;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  /* ── SCENARIOS ── */
+  .scenarios-section {
+    grid-column: 1 / -1;
+  }
+
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .scenario-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .scenario-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .scenario-card:hover::before { opacity: 1; }
+
+  .scenario-card.featured {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+  }
+
+  .scenario-card.featured::before { opacity: 1; }
+
+  .scenario-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  .scenario-card.featured .scenario-label { color: var(--accent); }
+
+  .scenario-clients {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .scenario-monthly {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .scenario-card.featured .scenario-monthly { color: var(--accent); }
+
+  .scenario-annual {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text3);
+    transition: all 0.3s ease;
+  }
+
+  /* ── HOW TO USE ── */
+  .how-section {
+    grid-column: 1 / -1;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .cta-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .cta-divider::before, .cta-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .cta-divider span {
+    font-size: 12px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+
+  .kofi-block, .product-block { max-width: 480px; margin: 0 auto; }
+
+  .kofi-block h3, .product-block h3 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .kofi-block p, .product-block p {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border: none;
+    font-family: 'Sora', sans-serif;
+  }
+
+  .btn:active { transform: scale(0.98); }
+
+  .btn-outline {
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    background: transparent;
+  }
+
+  .btn-outline:hover { border-color: var(--accent-border); color: var(--accent); background: var(--accent-bg); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #080C10;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(79,158,255,0.3); }
+
+  .product-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+    text-align: left;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .product-features .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .product-features .feat i { color: var(--success); font-size: 12px; }
+
+  .btn-sub {
+    display: block;
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 10px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  footer a { color: var(--text3); text-decoration: none; transition: color 0.15s ease; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+
+  .nav-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: -0.3px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 600px) { .nav-title { display: none; } }
+
+  @media (max-width: 768px) {
+    .main { grid-template-columns: 1fr; }
+    .scenarios-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { padding: 32px 20px; }
+    .nav-links .nav-link-hide { display: none; }
+    .hero { padding: 40px 20px 32px; }
+    .primary-result .value { font-size: 36px; }
+  }
+
+  @media (max-width: 480px) {
+    .results-grid { grid-template-columns: 1fr; }
+    .package-row { grid-template-columns: 1fr auto; }
+    .pkg-days { display: none; }
+  }
+
+  /* ── ANIMATE ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero, .main > * {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .main > *:nth-child(1) { animation-delay: 0.05s; }
+  .main > *:nth-child(2) { animation-delay: 0.1s; }
+  .main > *:nth-child(3) { animation-delay: 0.15s; }
+  .main > *:nth-child(4) { animation-delay: 0.2s; }
+  .main > *:nth-child(5) { animation-delay: 0.25s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  /* ── LIGHT MODE (Claude-inspired) ── */
+  body.light {
+    --bg:           #F7F7F5;
+    --surface:      #FFFFFF;
+    --surface2:     #F0F0ED;
+    --border:       #E5E5E2;
+    --border2:      #D4D4D0;
+    --accent:       #2563EB;
+    --accent2:      #3B82F6;
+    --accent-bg:    rgba(37,99,235,0.06);
+    --accent-border:rgba(37,99,235,0.2);
+    --text:         #1A1A1A;
+    --text2:        #6B7280;
+    --text3:        #9CA3AF;
+    --success:      #059669;
+    --warning:      #D97706;
+    --danger:       #DC2626;
+    --gold:         #B45309;
+  }
+
+  body.light { background: var(--bg); }
+
+  body.light::before {
+    background-image:
+      linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+  }
+
+  body.light nav {
+    background: rgba(247,247,245,0.9);
+  }
+
+  body.light input[type="number"],
+  body.light select,
+  body.light input[type="range"] {
+    background: var(--surface2);
+    border-color: var(--border);
+    color: var(--text);
+  }
+
+  body.light .primary-result {
+    background: var(--surface2);
+  }
+
+  body.light .result-item,
+  body.light .scenario-card,
+  body.light .step,
+  body.light .package-row {
+    background: var(--surface2);
+  }
+
+  /* Theme toggle button */
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+
+  /* Results card spans both input card rows */
+  .results-card {
+    grid-row: 1 / 3;
+    grid-column: 2;
+  }
+
+  /* Input cards stack naturally in col 1 */
+  .main > .card:nth-child(1),
+  .main > .card:nth-child(2) {
+    grid-column: 1;
+  }
+
+  @media (max-width: 768px) {
+    .results-card {
+      grid-row: auto;
+      grid-column: auto;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://fractionaltools.com" class="nav-logo">
+      <span class="icon">💼</span>
+      C-Suite Tools
+    </a>
+    <div class="nav-title">Fractional Consultant Rate Calculator</div>
+    <div class="nav-links">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle light/dark mode">🌙</button>
+      <a href="https://ko-fi.com/fractionaltools" class="nav-link-hide">☕ Ko-fi</a>
+      <a href="https://fractionaltools.gumroad.com" class="btn-cta">Get the Toolkits →</a>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- MAIN TOOL -->
+<div class="main">
+
+  <!-- INPUT CARD 1 -->
+  <div class="card">
+    <div class="card-title"><i class="fa-solid fa-sliders"></i> Your Income Goals</div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Monthly Income Target</span>
+        <span class="input-val" id="val-income">$15,000</span>
+      </div>
+      <input type="range" id="income" min="1000" max="50000" step="500" value="15000" oninput="sync('income','val-income','$',true);calculate()">
+      <div class="helper">What you want to take home per month before expenses</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Monthly Business Overhead</span>
+        <span class="input-val" id="val-overhead">$800</span>
+      </div>
+      <input type="range" id="overhead" min="0" max="5000" step="100" value="800" oninput="sync('overhead','val-overhead','$',true);calculate()">
+      <div class="helper">Tools, software, insurance, office costs per month</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Income Tax Rate</span>
+        <span class="input-val" id="val-tax">30%</span>
+      </div>
+      <input type="range" id="tax" min="0" max="55" step="1" value="30" oninput="sync('tax','val-tax','',false,'%');calculate()">
+      <div class="helper">Your estimated personal income tax rate</div>
+    </div>
+  </div>
+
+  <!-- INPUT CARD 2 -->
+  <div class="card">
+    <div class="card-title"><i class="fa-solid fa-clock"></i> Your Time & Clients</div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Billable Hours Per Week</span>
+        <span class="input-val" id="val-hrs">25 hrs</span>
+      </div>
+      <input type="range" id="hrs" min="5" max="40" step="1" value="25" oninput="sync('hrs','val-hrs','',false,' hrs');calculate()">
+      <div class="helper">Hours per week you actually bill to clients</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Weeks Worked Per Month</span>
+        <span class="input-val" id="val-weeks">4 wks</span>
+      </div>
+      <input type="range" id="weeks" min="1" max="5" step="0.5" value="4" oninput="sync('weeks','val-weeks','',false,' wks');calculate()">
+      <div class="helper">Average weeks per month (account for holidays)</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Max Active Clients</span>
+        <span class="input-val" id="val-clients">4</span>
+      </div>
+      <input type="range" id="clients" min="1" max="10" step="1" value="4" oninput="sync('clients','val-clients','',false,'');calculate()">
+      <div class="helper">Maximum number of clients you want at one time</div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label"><span>Your Role / Specialty</span></div>
+      <select id="role" onchange="calculate()">
+        <option value="cmo">Fractional CMO (Marketing)</option>
+        <option value="cfo">Fractional CFO (Finance)</option>
+        <option value="coo">Fractional COO (Operations)</option>
+        <option value="cto">Fractional CTO (Technology)</option>
+        <option value="sales">B2B Sales Consultant</option>
+        <option value="other">Other / General Consultant</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="results-card">
+    <div class="results-header">
+      <div class="card-title"><i class="fa-solid fa-chart-line"></i> Your Ideal Rates</div>
+    </div>
+    <div class="results-body">
+
+      <div class="primary-result">
+        <div class="label">Minimum Hourly Rate</div>
+        <div class="value" id="hourly-rate">$0</div>
+        <div class="sublabel">to cover income + overhead + taxes</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-item">
+          <div class="r-label">Billable Hrs / Month</div>
+          <div class="r-value" id="total-hours">0</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">Pre-Tax Target</div>
+          <div class="r-value gold" id="pretax">$0</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">After-Tax Income</div>
+          <div class="r-value positive" id="aftertax">$0</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">Annual Potential</div>
+          <div class="r-value" id="annual">$0</div>
+        </div>
+      </div>
+
+      <div class="packages-section">
+        <div class="section-label"><i class="fa-solid fa-boxes-stacked"></i> Suggested Package Prices</div>
+        <div id="packages-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCENARIOS -->
+  <div class="card scenarios-section">
+    <div class="card-title"><i class="fa-solid fa-rocket"></i> Revenue Scenarios</div>
+    <div class="scenarios-grid">
+      <div class="scenario-card" id="sc-conservative">
+        <div class="scenario-label">Conservative</div>
+        <div class="scenario-clients" id="sc-con-clients">1 client · Advisory</div>
+        <div class="scenario-monthly" id="sc-con-monthly">$0</div>
+        <div class="scenario-annual" id="sc-con-annual">$0 / year</div>
+      </div>
+      <div class="scenario-card featured" id="sc-moderate">
+        <div class="scenario-label">Moderate ★</div>
+        <div class="scenario-clients" id="sc-mod-clients">2 clients · Part-Time</div>
+        <div class="scenario-monthly" id="sc-mod-monthly">$0</div>
+        <div class="scenario-annual" id="sc-mod-annual">$0 / year</div>
+      </div>
+      <div class="scenario-card" id="sc-aggressive">
+        <div class="scenario-label">Aggressive</div>
+        <div class="scenario-clients" id="sc-agg-clients">Max clients · Embedded</div>
+        <div class="scenario-monthly" id="sc-agg-monthly">$0</div>
+        <div class="scenario-annual" id="sc-agg-annual">$0 / year</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="card how-section">
+    <div class="card-title"><i class="fa-solid fa-circle-info"></i> How to Use This Calculator</div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01 —</div>
+        <div class="step-title">Set your income goal</div>
+        <div class="step-desc">Enter what you want to take home monthly, plus your overhead costs and tax rate.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02 —</div>
+        <div class="step-title">Set your time available</div>
+        <div class="step-desc">Adjust your billable hours per week and how many clients you want to handle at once.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03 —</div>
+        <div class="step-title">Read your rates</div>
+        <div class="step-desc">Your minimum hourly rate, package prices, and revenue scenarios update instantly as you adjust.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA SECTION -->
+  <div class="cta-section">
+
+    <!-- KO-FI -->
+    <div class="kofi-block">
+      <h3>☕ Found this useful?</h3>
+      <p>This calculator is completely free. If it saved you time or helped you set better rates, a coffee would mean a lot.</p>
+      <a href="https://ko-fi.com/fractionaltools" class="btn btn-outline">
+        <i class="fa-solid fa-mug-hot"></i> Buy me a coffee
+      </a>
+    </div>
+
+    <div class="cta-divider"><span>or go deeper</span></div>
+
+    <!-- PRODUCT CTA -->
+    <div class="product-block">
+      <h3 id="cta-product-title">Want the complete system?</h3>
+      <p>This calculator shows you your rates. The full toolkit gives you everything else — templates, frameworks, and spreadsheets to run your entire consulting practice.</p>
+      <div class="product-features">
+        <div class="feat"><i class="fa-solid fa-check"></i> 5 Notion workspaces — 25 ready-to-use templates</div>
+        <div class="feat"><i class="fa-solid fa-check"></i> 15 Google Sheets — audit, dashboard, pricing per role</div>
+        <div class="feat"><i class="fa-solid fa-check"></i> Discovery call playbooks, proposals, SOW templates</div>
+      </div>
+      <a href="https://fractionaltools.gumroad.com" class="btn btn-primary" id="cta-product-btn">
+        View the Complete Collection →
+      </a>
+      <span class="btn-sub">One-time purchase · Instant access · 7-day money-back guarantee</span>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    © 2026 C-Suite Tools · Free tools for consulting professionals · Built by Mohamed.B
+    &nbsp;·&nbsp;
+    <a href="https://fractionaltools.com">More Free Tools</a>
+    &nbsp;·&nbsp;
+    <a href="https://ko-fi.com/fractionaltools">Ko-fi</a>
+    &nbsp;·&nbsp;
+    <a href="https://fractionaltools.gumroad.com">Gumroad Store</a>
+  </p>
+</footer>
+
+<script>
+  // ── HELPERS ──────────────────────────────────────────────────────────────────
+  const fmt = (n) => '$' + Math.round(n).toLocaleString();
+  const fmtK = (n) => {
+    if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000)    return '$' + (n/1000).toFixed(0) + 'K';
+    return fmt(n);
+  };
+
+  function sync(id, valId, prefix, isCurrency, suffix='') {
+    const v = parseFloat(document.getElementById(id).value);
+    let display;
+    if (isCurrency) {
+      display = '$' + Math.round(v).toLocaleString();
+    } else {
+      display = prefix + v + suffix;
+    }
+    document.getElementById(valId).textContent = display;
+  }
+
+  function animateValue(el, newVal) {
+    el.style.transform = 'scale(1.03)';
+    el.style.opacity = '0.7';
+    setTimeout(() => {
+      el.textContent = newVal;
+      el.style.transform = 'scale(1)';
+      el.style.opacity = '1';
+    }, 150);
+  }
+
+  // ── PACKAGES CONFIG ───────────────────────────────────────────────────────────
+  const packageDefs = [
+    { name: 'Advisory',      days: 1, markup: 0.25 },
+    { name: 'Part-Time',     days: 2, markup: 0.25 },
+    { name: 'Embedded',      days: 3, markup: 0.25 },
+    { name: 'Full Fractional', days: 4, markup: 0.25 },
+  ];
+
+  // ── MAIN CALCULATE ────────────────────────────────────────────────────────────
+  // ── ROLE PRESETS ─────────────────────────────────────────────────────────────
+  const rolePresets = {
+    cmo:   { income: 15000, overhead: 800,  tax: 30, hrs: 25, weeks: 4, clients: 4,
+             label: 'Fractional CMO',
+             pkgs: ['Advisory CMO','Part-Time CMO','Embedded CMO','Full Fractional CMO'],
+             gumroad: 'https://fractionaltools.gumroad.com/l/fractional-cmo-toolkit' },
+    cfo:   { income: 20000, overhead: 900,  tax: 30, hrs: 25, weeks: 4, clients: 3,
+             label: 'Fractional CFO',
+             pkgs: ['Advisory CFO','Part-Time CFO','Embedded CFO','Full Fractional CFO'],
+             gumroad: 'https://fractionaltools.gumroad.com/l/fractional-cfo-toolkit' },
+    coo:   { income: 18000, overhead: 700,  tax: 30, hrs: 28, weeks: 4, clients: 4,
+             label: 'Fractional COO',
+             pkgs: ['Advisory COO','Part-Time COO','Embedded COO','Full Fractional COO'],
+             gumroad: 'https://fractionaltools.gumroad.com/l/fractional-coo-toolkit' },
+    cto:   { income: 22000, overhead: 900,  tax: 30, hrs: 25, weeks: 4, clients: 3,
+             label: 'Fractional CTO',
+             pkgs: ['Tech Advisory','Part-Time CTO','Embedded CTO','Full Fractional CTO'],
+             gumroad: 'https://fractionaltools.gumroad.com/l/fractional-cto-toolkit' },
+    sales: { income: 15000, overhead: 600,  tax: 30, hrs: 28, weeks: 4, clients: 5,
+             label: 'B2B Sales Consultant',
+             pkgs: ['Sales Advisory','Part-Time Consultant','Embedded Consultant','Full Fractional'],
+             gumroad: 'https://fractionaltools.gumroad.com/l/b2b-sales-consultant-toolkit' },
+    other: { income: 12000, overhead: 600,  tax: 30, hrs: 25, weeks: 4, clients: 4,
+             label: 'Consultant',
+             pkgs: ['Advisory','Part-Time','Embedded','Full Fractional'],
+             gumroad: 'https://fractionaltools.gumroad.com' },
+  };
+
+  let lastRole = '';
+
+  function applyRolePreset(role) {
+    if (role === lastRole) return;
+    lastRole = role;
+    const p = rolePresets[role];
+    if (!p) return;
+
+    // Update slider values
+    const fields = {income: p.income, overhead: p.overhead, tax: p.tax,
+                    hrs: p.hrs, weeks: p.weeks, clients: p.clients};
+    for (const [id, val] of Object.entries(fields)) {
+      document.getElementById(id).value = val;
+    }
+
+    // Sync display values
+    sync('income',  'val-income',  '$', true);
+    sync('overhead','val-overhead','$', true);
+    sync('tax',     'val-tax',     '', false, '%');
+    sync('hrs',     'val-hrs',     '', false, ' hrs');
+    sync('weeks',   'val-weeks',   '', false, ' wks');
+    sync('clients', 'val-clients', '', false, '');
+
+    // Update CTA product link
+    const ctaBtn = document.getElementById('cta-product-btn');
+    const ctaTitle = document.getElementById('cta-product-title');
+    if (ctaBtn) ctaBtn.href = p.gumroad;
+    if (ctaTitle) ctaTitle.textContent = 'Want the complete ' + p.label + ' system?';
+  }
+
+  // ── MAIN CALCULATE ────────────────────────────────────────────────────────────
+  function calculate() {
+    const role     = document.getElementById('role').value;
+    applyRolePreset(role);
+    const preset   = rolePresets[role] || rolePresets.other;
+
+    const income   = parseFloat(document.getElementById('income').value)   || 0;
+    const overhead = parseFloat(document.getElementById('overhead').value) || 0;
+    const taxRate  = parseFloat(document.getElementById('tax').value) / 100 || 0;
+    const hrsWeek  = parseFloat(document.getElementById('hrs').value)      || 0;
+    const weeks    = parseFloat(document.getElementById('weeks').value)    || 0;
+    const maxClients = parseInt(document.getElementById('clients').value)  || 1;
+
+    const totalHrsMonth = hrsWeek * weeks;
+    const pretaxNeeded  = taxRate < 1 ? income / (1 - taxRate) : income;
+    const totalNeeded   = pretaxNeeded + overhead;
+    const minHourly     = totalHrsMonth > 0 ? totalNeeded / totalHrsMonth : 0;
+    const afterTax      = income;
+    const annualPotential = income * 12;
+
+    animateValue(document.getElementById('hourly-rate'), fmt(minHourly));
+    animateValue(document.getElementById('total-hours'), Math.round(totalHrsMonth) + ' hrs');
+    animateValue(document.getElementById('pretax'), fmt(pretaxNeeded));
+    animateValue(document.getElementById('aftertax'), fmt(afterTax));
+    animateValue(document.getElementById('annual'), fmtK(annualPotential));
+
+    // Build packages with role-specific names
+    const pkgList = document.getElementById('packages-list');
+    pkgList.innerHTML = '';
+    const pkgPrices = [];
+    const pkgNames = preset.pkgs || ['Advisory','Part-Time','Embedded','Full Fractional'];
+
+    packageDefs.forEach((pkg, i) => {
+      const hrsMonth = pkg.days * 8 * weeks;
+      const costFloor = hrsMonth * minHourly + overhead;
+      const suggested = Math.ceil(costFloor * (1 + pkg.markup) / 500) * 500;
+      pkgPrices.push(suggested);
+
+      const row = document.createElement('div');
+      row.className = 'package-row';
+      row.innerHTML = `
+        <div>
+          <div class="pkg-name">${pkgNames[i] || pkg.name}</div>
+        </div>
+        <div class="pkg-days">${pkg.days}d/wk · ${Math.round(hrsMonth)} hrs/mo</div>
+        <div class="pkg-price">${fmt(suggested)}<span style="font-size:10px;color:var(--text3)">/mo</span></div>
+      `;
+      pkgList.appendChild(row);
+    });
+
+    const advisory  = pkgPrices[0] || 0;
+    const partTime  = pkgPrices[1] || 0;
+    const embedded  = pkgPrices[2] || 0;
+
+    const conMonthly = 1 * advisory;
+    animateValue(document.getElementById('sc-con-monthly'), fmt(conMonthly));
+    animateValue(document.getElementById('sc-con-annual'), fmtK(conMonthly * 12) + ' / year');
+    document.getElementById('sc-con-clients').textContent = '1 client · ' + (pkgNames[0] || 'Advisory');
+
+    const modMonthly = 2 * partTime;
+    animateValue(document.getElementById('sc-mod-monthly'), fmt(modMonthly));
+    animateValue(document.getElementById('sc-mod-annual'), fmtK(modMonthly * 12) + ' / year');
+    document.getElementById('sc-mod-clients').textContent = '2 clients · ' + (pkgNames[1] || 'Part-Time');
+
+    const aggMonthly = maxClients * embedded;
+    animateValue(document.getElementById('sc-agg-monthly'), fmt(aggMonthly));
+    animateValue(document.getElementById('sc-agg-annual'), fmtK(aggMonthly * 12) + ' / year');
+    document.getElementById('sc-agg-clients').textContent = `${maxClients} clients · ` + (pkgNames[2] || 'Embedded');
+  }
+
+  // ── INIT ──  // ── INIT ──────────────────────────────────────────────────────────────────────
+  // Sync initial display values
+  sync('income',  'val-income',  '$', true);
+  sync('overhead','val-overhead','$', true);
+  sync('tax',     'val-tax',     '', false, '%');
+  sync('hrs',     'val-hrs',     '', false, ' hrs');
+  sync('weeks',   'val-weeks',   '', false, ' wks');
+  sync('clients', 'val-clients', '', false, '');
+  calculate();
+
+  // ── THEME TOGGLE ─────────────────────────────────────────────────────────────
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-btn');
+    if (body.classList.contains('light')) {
+      body.classList.remove('light');
+      btn.textContent = '🌙';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.add('light');
+      btn.textContent = '☀️';
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  // Restore saved theme
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    document.getElementById('theme-btn').textContent = '☀️';
+  }
+
+</script>
+
+</body>
+</html>

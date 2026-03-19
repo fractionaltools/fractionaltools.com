@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free tools for fractional consultants. Rate calculators, audit scorers, pipeline trackers and more. No signup required.">
+<meta property="og:title" content="Fractional Tools — Free Tools for Consulting Professionals">
+<meta property="og:description" content="Free calculators and tools for fractional CMOs, CFOs, COOs, CTOs and sales consultants. No signup. Instant results.">
+<meta property="og:url" content="https://fractionaltools.com">
+<title>Fractional Tools — Free Tools for Consulting Professionals</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:           #080C10;
+    --surface:      #0E1318;
+    --surface2:     #141A21;
+    --border:       #1E2730;
+    --border2:      #263040;
+    --accent:       #4F9EFF;
+    --accent2:      #7BB8FF;
+    --accent-bg:    rgba(79,158,255,0.07);
+    --accent-border:rgba(79,158,255,0.25);
+    --text:         #E8EEF5;
+    --text2:        #8A99A8;
+    --text3:        #4A5568;
+    --success:      #34D399;
+    --gold:         #F0B429;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,158,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,158,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 58px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo .icon {
+    width: 30px;
+    height: 30px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+
+  .nav-links .btn-cta {
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    background: var(--accent-bg);
+  }
+
+  .nav-links .btn-cta:hover {
+    background: rgba(79,158,255,0.14);
+    color: var(--accent2);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 24px 52px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .hero h1 .line2 {
+    color: var(--text2);
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 480px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  /* ── TOOLS GRID ── */
+  .tools-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label i { color: var(--accent); font-size: 11px; }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── TOOL CARD ── */
+  .tool-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-accent, var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .tool-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .tool-card:hover::before { transform: scaleX(1); }
+
+  .tool-card.coming-soon {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .tool-card.coming-soon:hover { transform: none; box-shadow: none; }
+
+  .tool-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    background: var(--icon-bg, var(--accent-bg));
+    border: 1px solid var(--icon-border, var(--accent-border));
+    flex-shrink: 0;
+  }
+
+  .tool-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tool-status {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+
+  .status-live {
+    color: var(--success);
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.25);
+  }
+
+  .status-soon {
+    color: var(--text3);
+    background: rgba(74,85,104,0.15);
+    border: 1px solid var(--border);
+  }
+
+  .tool-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+    margin-top: 4px;
+  }
+
+  .tool-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .tool-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .tool-role {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .tool-role i { font-size: 10px; }
+
+  .tool-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    font-size: 11px;
+    transition: all 0.15s ease;
+  }
+
+  .tool-card:hover .tool-arrow {
+    background: var(--accent);
+    color: #080C10;
+    border-color: var(--accent);
+  }
+
+  /* ── PRODUCTS SECTION ── */
+  .products-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .products-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .products-strip h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+  }
+
+  .products-strip p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .products-roles {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .role-pill {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 99px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: #080C10;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent2);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(79,158,255,0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text2);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.5s ease both; }
+
+  .tool-card {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .tool-card:nth-child(1) { animation-delay: 0.05s; }
+  .tool-card:nth-child(2) { animation-delay: 0.10s; }
+  .tool-card:nth-child(3) { animation-delay: 0.15s; }
+  .tool-card:nth-child(4) { animation-delay: 0.20s; }
+  .tool-card:nth-child(5) { animation-delay: 0.25s; }
+  .tool-card:nth-child(6) { animation-delay: 0.30s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .tools-grid { grid-template-columns: 1fr; }
+    .hero h1 { letter-spacing: -1.5px; }
+    .hero-stats { gap: 20px; }
+    .stat-divider { display: none; }
+    .products-strip { grid-template-columns: 1fr; }
+    .nav-links .hide-mobile { display: none; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  /* ── LIGHT MODE ── */
+  body.light {
+    --bg:            #F7F7F5;
+    --surface:       #FFFFFF;
+    --surface2:      #F0F0ED;
+    --border:        #E5E5E2;
+    --border2:       #D4D4D0;
+    --accent:        #2563EB;
+    --accent2:       #3B82F6;
+    --accent-bg:     rgba(37,99,235,0.06);
+    --accent-border: rgba(37,99,235,0.18);
+    --text:          #1A1A1A;
+    --text2:         #6B7280;
+    --text3:         #9CA3AF;
+    --success:       #059669;
+    --gold:          #B45309;
+  }
+
+  body.light::before {
+    background-image:
+      linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
+  }
+
+  body.light nav {
+    background: rgba(247,247,245,0.92);
+  }
+
+  body.light .tool-card.coming-soon {
+    opacity: 0.45;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+    font-family: inherit;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  body.light .theme-toggle {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+
+  body.light .theme-toggle:hover {
+    background: rgba(37,99,235,0.12);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="icon">🛠️</span>
+      Fractional Tools
+    </a>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <h1>Tools for fractional<br><span class="line2">consulting professionals.</span></h1>
+  <p class="hero-sub">
+    Calculators and frameworks for fractional CMOs, CFOs, COOs, CTOs and sales consultants.
+    Open a tool and get results immediately.
+  </p>
+
+</section>
+
+<!-- TOOLS GRID -->
+<section class="tools-section">
+  <div class="section-header">
+    <div class="section-label">
+      <i class="fa-solid fa-wrench"></i>
+      All Tools
+    </div>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- Tool 1 — LIVE -->
+    <a href="/rate-calculator"
+       class="tool-card"
+       style="--card-accent:#4F9EFF; --icon-bg:rgba(79,158,255,0.08); --icon-border:rgba(79,158,255,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">💰</div>
+        <span class="tool-status status-live">Live</span>
+      </div>
+      <div class="tool-name">Fractional Rate Calculator</div>
+      <div class="tool-desc">Enter your income goal and get your minimum hourly rate, package prices, and revenue scenarios instantly.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-users"></i> All Roles</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </a>
+
+    <!-- Tool 2 — COMING SOON -->
+    <div class="tool-card coming-soon"
+         style="--card-accent:#34D399; --icon-bg:rgba(52,211,153,0.08); --icon-border:rgba(52,211,153,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">📊</div>
+        <span class="tool-status status-soon">Coming Soon</span>
+      </div>
+      <div class="tool-name">Sales Pipeline Health Score</div>
+      <div class="tool-desc">Answer 10 quick questions about your client's pipeline and get a scored diagnosis with priority fixes.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-chart-line"></i> Sales Consultants</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <!-- Tool 3 — COMING SOON -->
+    <div class="tool-card coming-soon"
+         style="--card-accent:#F0B429; --icon-bg:rgba(240,180,41,0.08); --icon-border:rgba(240,180,41,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">💵</div>
+        <span class="tool-status status-soon">Coming Soon</span>
+      </div>
+      <div class="tool-name">Cash Runway Calculator</div>
+      <div class="tool-desc">Enter current cash balance and monthly burn rate to instantly see runway in months and the break-even date.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-landmark"></i> Fractional CFOs</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <!-- Tool 4 — COMING SOON -->
+    <div class="tool-card coming-soon"
+         style="--card-accent:#F472B6; --icon-bg:rgba(244,114,182,0.08); --icon-border:rgba(244,114,182,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">📣</div>
+        <span class="tool-status status-soon">Coming Soon</span>
+      </div>
+      <div class="tool-name">Marketing Audit Score</div>
+      <div class="tool-desc">Score your client's marketing across 8 categories and get an instant Red/Yellow/Green health report.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-bullhorn"></i> Fractional CMOs</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <!-- Tool 5 — COMING SOON -->
+    <div class="tool-card coming-soon"
+         style="--card-accent:#2E7D32; --icon-bg:rgba(46,125,50,0.08); --icon-border:rgba(46,125,50,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">⚙️</div>
+        <span class="tool-status status-soon">Coming Soon</span>
+      </div>
+      <div class="tool-name">Operations Efficiency Score</div>
+      <div class="tool-desc">Diagnose operational health across processes, people, and systems. Get a prioritized improvement plan.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-gears"></i> Fractional COOs</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <!-- Tool 6 — COMING SOON -->
+    <div class="tool-card coming-soon"
+         style="--card-accent:#00ACC1; --icon-bg:rgba(0,172,193,0.08); --icon-border:rgba(0,172,193,0.2)">
+      <div class="tool-card-header">
+        <div class="tool-icon">💻</div>
+        <span class="tool-status status-soon">Coming Soon</span>
+      </div>
+      <div class="tool-name">Tech Stack Cost Calculator</div>
+      <div class="tool-desc">List your client's tools and monthly costs. Identify redundancy, savings, and optimization opportunities.</div>
+      <div class="tool-footer">
+        <span class="tool-role"><i class="fa-solid fa-microchip"></i> Fractional CTOs</span>
+        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRODUCTS STRIP -->
+<section class="products-section">
+  <div class="products-strip">
+    <div>
+      <h2>The complete consulting toolkit</h2>
+      <p>Five professional toolkits covering every major fractional executive role. Notion templates, Google Sheets, discovery call playbooks, proposals, and SOW templates — ready to use on day one.</p>
+      <div class="products-roles">
+        <span class="role-pill">💼 Fractional CMO</span>
+        <span class="role-pill">💰 Fractional CFO</span>
+        <span class="role-pill">🏭 Fractional COO</span>
+        <span class="role-pill">💻 Fractional CTO</span>
+        <span class="role-pill">🎯 B2B Sales</span>
+      </div>
+    </div>
+    <a href="https://fractionaltools.gumroad.com" class="btn-primary">
+      View All Toolkits →
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      🛠️ Fractional Tools
+    </a>
+    <div class="footer-links">
+      <a href="/rate-calculator">Rate Calculator</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+      <a href="https://fractionaltools.gumroad.com">Toolkits</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-btn');
+    if (body.classList.contains('light')) {
+      body.classList.remove('light');
+      btn.textContent = '🌙';
+      localStorage.setItem('ft-theme', 'dark');
+    } else {
+      body.classList.add('light');
+      btn.textContent = '☀️';
+      localStorage.setItem('ft-theme', 'light');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('ft-theme') === 'light') {
+      document.body.classList.add('light');
+      document.getElementById('theme-btn').textContent = '☀️';
+    }
+  });
+</script>
+
+</body>
+</html>
