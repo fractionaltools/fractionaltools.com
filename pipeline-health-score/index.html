@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free sales pipeline health score. Answer 10 questions about your pipeline and get an instant scored diagnosis with priority fixes.">
+<meta property="og:title" content="Sales Pipeline Health Score — Fractional Tools">
+<meta property="og:description" content="Diagnose your sales pipeline in 2 minutes. Free, instant, no signup.">
+<title>Sales Pipeline Health Score — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#080C10;--surface:#0E1318;--surface2:#141A21;
+    --border:#1E2730;--border2:#263040;
+    --accent:#34D399;--accent2:#6EE7B7;
+    --accent-bg:rgba(52,211,153,0.07);--accent-border:rgba(52,211,153,0.25);
+    --text:#E8EEF5;--text2:#8A99A8;--text3:#4A5568;
+    --success:#34D399;--warning:#F0B429;--danger:#F87171;
+    --input-bg:#060A0E;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(52,211,153,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(52,211,153,.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  body.light{--bg:#F7F7F5;--surface:#FFF;--surface2:#F0F0ED;--border:#E5E5E2;--border2:#D4D4D0;--accent:#059669;--accent2:#10B981;--accent-bg:rgba(5,150,105,.06);--accent-border:rgba(5,150,105,.2);--text:#1A1A1A;--text2:#6B7280;--text3:#9CA3AF;--input-bg:#F0F0ED}
+  body.light::before{background-image:linear-gradient(rgba(5,150,105,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(5,150,105,.025) 1px,transparent 1px)}
+  body.light nav{background:rgba(247,247,245,.92)}
+  body.light .theme-toggle{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px}
+  .nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:15px}
+  .nav-logo .icon{width:30px;height:30px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .nav-title{font-size:14px;font-weight:600;color:var(--text2);position:absolute;left:50%;transform:translateX(-50%)}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:8px;transition:all .15s ease}
+  .nav-links a:hover{color:var(--text);background:var(--surface2)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s ease;flex-shrink:0;font-family:inherit}
+  .theme-toggle:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  @media(max-width:600px){.nav-title{display:none}.hide-mobile{display:none}}
+
+  /* ── PAGE LAYOUT ── */
+  .main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:32px 24px 80px}
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px}
+  .progress-label{font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}
+  .progress-track{flex:1;height:6px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+  .progress-count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+
+  /* ── QUESTION CARD ── */
+  .question-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:16px;display:none;animation:fadeUp .3s ease both}
+  .question-card.active{display:block}
+  .q-number{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.08em;margin-bottom:12px}
+  .q-category{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+  .q-text{font-size:18px;font-weight:700;letter-spacing:-.4px;line-height:1.4;margin-bottom:8px}
+  .q-why{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:28px}
+
+  /* Answer options */
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option{
+    display:flex;align-items:center;gap:14px;
+    padding:14px 20px;
+    background:var(--surface2);border:1px solid var(--border);
+    border-radius:10px;cursor:pointer;
+    transition:all .15s ease;
+    font-size:14px;font-weight:500;color:var(--text2);
+  }
+  .option:hover{border-color:var(--accent-border);color:var(--text);background:var(--accent-bg)}
+  .option.selected{border-color:var(--accent);background:var(--accent-bg);color:var(--text)}
+  .option-score{
+    width:28px;height:28px;border-radius:8px;
+    display:grid;place-items:center;flex-shrink:0;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    background:var(--border2);color:var(--text3);
+    transition:all .15s ease;
+  }
+  .option.selected .option-score{background:var(--accent);color:#080C10}
+
+  /* Nav buttons */
+  .q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+  .btn-nav{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 24px;border-radius:10px;
+    font-size:13px;font-weight:600;cursor:pointer;
+    text-decoration:none;transition:all .15s ease;
+    font-family:'Sora',sans-serif;border:none;
+  }
+  .btn-back{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+  .btn-back:hover{border-color:var(--border2);color:var(--text)}
+  .btn-next{background:var(--accent);color:#080C10}
+  .btn-next:hover{background:var(--accent2);transform:translateY(-1px)}
+  .btn-next:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+  /* ── RESULTS ── */
+  #results{display:none;animation:fadeUp .4s ease both}
+
+  .score-hero{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:20px;overflow:hidden;margin-bottom:20px;
+    text-align:center;
+  }
+  .score-hero-top{padding:40px 32px 32px;border-bottom:1px solid var(--border)}
+  .score-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:16px}
+
+  /* Score circle */
+  .score-circle{
+    width:140px;height:140px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    margin:0 auto 16px;
+    border:3px solid var(--accent);
+    background:var(--accent-bg);
+    position:relative;
+  }
+  .score-number{font-family:'IBM Plex Mono',monospace;font-size:42px;font-weight:600;color:var(--accent);line-height:1;letter-spacing:-2px}
+  .score-denom{font-size:13px;color:var(--text3);margin-top:2px}
+  .score-grade{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+  .score-desc{font-size:14px;color:var(--text2);max-width:420px;margin:0 auto;line-height:1.6}
+
+  /* Category breakdown */
+  .categories-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+  .cat-item{padding:16px 20px;border-right:1px solid var(--border);text-align:center}
+  .cat-item:last-child{border-right:none}
+  .cat-name{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+  .cat-score{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;margin-bottom:4px}
+  .cat-bar{height:3px;background:var(--border2);border-radius:99px;overflow:hidden;margin-top:6px}
+  .cat-fill{height:100%;border-radius:99px;transition:width .6s ease}
+
+  /* Priority fixes */
+  .fixes-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+  .fixes-header{padding:16px 24px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:8px}
+  .fixes-header i{color:var(--accent);font-size:11px}
+  .fix-item{display:flex;align-items:flex-start;gap:16px;padding:16px 24px;border-bottom:1px solid var(--border);transition:background .15s ease}
+  .fix-item:last-child{border-bottom:none}
+  .fix-item:hover{background:var(--surface2)}
+  .fix-priority{
+    width:28px;height:28px;border-radius:8px;flex-shrink:0;
+    display:grid;place-items:center;
+    font-size:11px;font-weight:700;
+    margin-top:2px;
+  }
+  .fix-p1{background:rgba(248,113,113,.15);color:#F87171;border:1px solid rgba(248,113,113,.3)}
+  .fix-p2{background:rgba(240,180,41,.15);color:#F0B429;border:1px solid rgba(240,180,41,.3)}
+  .fix-p3{background:rgba(52,211,153,.15);color:#34D399;border:1px solid rgba(52,211,153,.3)}
+  .fix-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+  .fix-desc{font-size:13px;color:var(--text2);line-height:1.5}
+
+  /* Retake button */
+  .retake-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 24px;border-radius:10px;
+    font-size:13px;font-weight:600;cursor:pointer;
+    border:1px solid var(--border2);color:var(--text2);
+    background:transparent;font-family:'Sora',sans-serif;
+    transition:all .15s ease;
+  }
+  .retake-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+
+  /* ── CTA ── */
+  .cta-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;margin-bottom:20px}
+  .cta-divider{display:flex;align-items:center;gap:16px;margin:28px 0}
+  .cta-divider::before,.cta-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+  .cta-divider span{font-size:12px;color:var(--text3)}
+  .kofi-block,.product-block{max-width:460px;margin:0 auto}
+  .kofi-block h3,.product-block h3{font-size:20px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+  .kofi-block p,.product-block p{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s ease;border:none;font-family:'Sora',sans-serif}
+  .btn:active{transform:scale(.98)}
+  .btn-outline{border:1px solid var(--border2);color:var(--text2);background:transparent}
+  .btn-outline:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .btn-primary{background:var(--accent);color:#080C10}
+  .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(52,211,153,.3)}
+  .product-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;text-align:left;max-width:320px;margin-left:auto;margin-right:auto}
+  .feat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+  .feat i{color:var(--success);font-size:11px}
+  .btn-sub{display:block;font-size:11px;color:var(--text3);margin-top:10px}
+
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700;
+    color: var(--text2); text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .footer-logo:hover { color: var(--accent); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 12px; color: var(--text3);
+    text-decoration: none; transition: color 0.15s ease;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 12px; color: var(--text3); }
+
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:600px){
+    .q-text{font-size:16px}
+    .categories-grid{grid-template-columns:1fr 1fr}
+    .categories-grid .cat-item:nth-child(3){border-right:none;border-top:1px solid var(--border)}
+    .cta-card{padding:32px 20px}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="icon">🛠️</span>Fractional Tools</a>
+    <div class="nav-title">Sales Pipeline Health Score</div>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progress-bar">
+    <span class="progress-label">Pipeline Health Check</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
+    <span class="progress-count" id="progress-count">1 / 10</span>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="questions">
+
+    <!-- Q1 -->
+    <div class="question-card active" data-q="0">
+      <div class="q-category">Pipeline Volume</div>
+      <div class="q-number">Question 1 of 10</div>
+      <div class="q-text">What is your current pipeline coverage ratio compared to your monthly quota?</div>
+      <div class="q-why">Best practice is 3x pipeline coverage. Less than 2x means you likely won't hit quota this month.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,0)"><div class="option-score">1</div>Less than 1x — pipeline is below quota</div>
+        <div class="option" data-score="2" onclick="selectOption(this,0)"><div class="option-score">2</div>1x to 2x — barely enough to hit quota</div>
+        <div class="option" data-score="3" onclick="selectOption(this,0)"><div class="option-score">3</div>2x to 3x — reasonable coverage</div>
+        <div class="option" data-score="4" onclick="selectOption(this,0)"><div class="option-score">4</div>3x or more — strong pipeline coverage</div>
+      </div>
+      <div class="q-nav">
+        <div></div>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-0" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" data-q="1">
+      <div class="q-category">Pipeline Quality</div>
+      <div class="q-number">Question 2 of 10</div>
+      <div class="q-text">How well do your active deals match your Ideal Customer Profile (ICP)?</div>
+      <div class="q-why">Deals outside your ICP take longer to close, have lower win rates, and often churn faster after signing.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,1)"><div class="option-score">1</div>No ICP defined — we take any deal we can get</div>
+        <div class="option" data-score="2" onclick="selectOption(this,1)"><div class="option-score">2</div>ICP defined but most deals don't match it</div>
+        <div class="option" data-score="3" onclick="selectOption(this,1)"><div class="option-score">3</div>About half our deals match the ICP</div>
+        <div class="option" data-score="4" onclick="selectOption(this,1)"><div class="option-score">4</div>Most deals (80%+) match our ICP tightly</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-1" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card" data-q="2">
+      <div class="q-category">Sales Process</div>
+      <div class="q-number">Question 3 of 10</div>
+      <div class="q-text">How clearly are your pipeline stages defined and consistently used by the team?</div>
+      <div class="q-why">Vague stage definitions lead to inaccurate forecasts. Stages should be tied to buyer actions, not seller assumptions.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,2)"><div class="option-score">1</div>No defined stages — we wing it</div>
+        <div class="option" data-score="2" onclick="selectOption(this,2)"><div class="option-score">2</div>Stages exist but aren't consistently used</div>
+        <div class="option" data-score="3" onclick="selectOption(this,2)"><div class="option-score">3</div>Stages defined and mostly followed</div>
+        <div class="option" data-score="4" onclick="selectOption(this,2)"><div class="option-score">4</div>Clear stages tied to buyer actions, used consistently</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-2" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card" data-q="3">
+      <div class="q-category">Deal Velocity</div>
+      <div class="q-number">Question 4 of 10</div>
+      <div class="q-text">How does your average deal age compare to your target sales cycle length?</div>
+      <div class="q-why">Deals sitting past their expected close date are a leading indicator of a stalled pipeline and forecasting risk.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,3)"><div class="option-score">1</div>Most deals are 2x+ over the target cycle length</div>
+        <div class="option" data-score="2" onclick="selectOption(this,3)"><div class="option-score">2</div>Many deals are running past their expected close</div>
+        <div class="option" data-score="3" onclick="selectOption(this,3)"><div class="option-score">3</div>Some delays but most deals are moving</div>
+        <div class="option" data-score="4" onclick="selectOption(this,3)"><div class="option-score">4</div>Deals are progressing at or near target pace</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-3" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card" data-q="4">
+      <div class="q-category">Win Rate</div>
+      <div class="q-number">Question 5 of 10</div>
+      <div class="q-text">What is your current opportunity-to-close win rate?</div>
+      <div class="q-why">B2B win rates typically range 20–30%. Below 15% signals problems with qualification, positioning, or the sales process itself.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,4)"><div class="option-score">1</div>Below 15% — we lose more than we win</div>
+        <div class="option" data-score="2" onclick="selectOption(this,4)"><div class="option-score">2</div>15% to 25% — below average</div>
+        <div class="option" data-score="3" onclick="selectOption(this,4)"><div class="option-score">3</div>25% to 35% — on par with industry average</div>
+        <div class="option" data-score="4" onclick="selectOption(this,4)"><div class="option-score">4</div>Above 35% — strong win rate</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-4" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card" data-q="5">
+      <div class="q-category">CRM Hygiene</div>
+      <div class="q-number">Question 6 of 10</div>
+      <div class="q-text">How accurate and up to date is your CRM data?</div>
+      <div class="q-why">Dirty CRM data makes forecasting unreliable and wastes rep time. Garbage in, garbage out.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,5)"><div class="option-score">1</div>CRM is not used or completely out of date</div>
+        <div class="option" data-score="2" onclick="selectOption(this,5)"><div class="option-score">2</div>CRM exists but data is patchy and unreliable</div>
+        <div class="option" data-score="3" onclick="selectOption(this,5)"><div class="option-score">3</div>CRM is mostly updated but has gaps</div>
+        <div class="option" data-score="4" onclick="selectOption(this,5)"><div class="option-score">4</div>CRM is clean, complete, and used consistently</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-5" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card" data-q="6">
+      <div class="q-category">Prospecting</div>
+      <div class="q-number">Question 7 of 10</div>
+      <div class="q-text">How consistently is new pipeline being added each week?</div>
+      <div class="q-why">A healthy pipeline requires constant new deal flow. Teams that stop prospecting see revenue dips 60–90 days later.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,6)"><div class="option-score">1</div>No systematic prospecting — we rely on inbound only</div>
+        <div class="option" data-score="2" onclick="selectOption(this,6)"><div class="option-score">2</div>Prospecting happens but is inconsistent</div>
+        <div class="option" data-score="3" onclick="selectOption(this,6)"><div class="option-score">3</div>Regular outreach with a defined weekly cadence</div>
+        <div class="option" data-score="4" onclick="selectOption(this,6)"><div class="option-score">4</div>Systematic multi-channel prospecting with tracked KPIs</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-6" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card" data-q="7">
+      <div class="q-category">Forecast Accuracy</div>
+      <div class="q-number">Question 8 of 10</div>
+      <div class="q-text">How accurate are your monthly sales forecasts compared to actual results?</div>
+      <div class="q-why">Forecast accuracy below 75% signals pipeline data or stage qualification problems that compound over time.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,7)"><div class="option-score">1</div>We don't forecast — or we're often off by 50%+</div>
+        <div class="option" data-score="2" onclick="selectOption(this,7)"><div class="option-score">2</div>Forecasts are rough — off by 25–50% regularly</div>
+        <div class="option" data-score="3" onclick="selectOption(this,7)"><div class="option-score">3</div>Reasonably accurate — within 20% most months</div>
+        <div class="option" data-score="4" onclick="selectOption(this,7)"><div class="option-score">4</div>Highly accurate — within 10% consistently</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-7" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-card" data-q="8">
+      <div class="q-category">Deal Qualification</div>
+      <div class="q-number">Question 9 of 10</div>
+      <div class="q-text">How rigorously are deals qualified before entering the pipeline?</div>
+      <div class="q-why">Unqualified deals clog pipelines, waste rep time, and destroy forecast accuracy. MEDDIC or BANT should be standard.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,8)"><div class="option-score">1</div>Any lead goes in — no qualification criteria</div>
+        <div class="option" data-score="2" onclick="selectOption(this,8)"><div class="option-score">2</div>Loose criteria — mostly gut feel</div>
+        <div class="option" data-score="3" onclick="selectOption(this,8)"><div class="option-score">3</div>Basic qualification (budget, authority, timeline)</div>
+        <div class="option" data-score="4" onclick="selectOption(this,8)"><div class="option-score">4</div>Rigorous framework (MEDDIC, BANT) applied consistently</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-8" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-card" data-q="9">
+      <div class="q-category">Sales & Marketing Alignment</div>
+      <div class="q-number">Question 10 of 10</div>
+      <div class="q-text">How well aligned are sales and marketing on lead quality and pipeline targets?</div>
+      <div class="q-why">Misalignment between sales and marketing is one of the top causes of poor pipeline quality and wasted budget.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,9)"><div class="option-score">1</div>Sales and marketing don't collaborate</div>
+        <div class="option" data-score="2" onclick="selectOption(this,9)"><div class="option-score">2</div>Some coordination but frequent friction</div>
+        <div class="option" data-score="3" onclick="selectOption(this,9)"><div class="option-score">3</div>Regular meetings and shared pipeline visibility</div>
+        <div class="option" data-score="4" onclick="selectOption(this,9)"><div class="option-score">4</div>Fully aligned — shared SLAs, definitions, and goals</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-nav btn-next btn-primary" onclick="showResults()" id="btn-next-9" disabled>See My Score <i class="fa-solid fa-chart-bar"></i></button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <div class="score-hero">
+      <div class="score-hero-top">
+        <div class="score-eyebrow">Your Sales Pipeline Health Score</div>
+        <div class="score-circle" id="score-circle">
+          <div class="score-number" id="score-number">0</div>
+          <div class="score-denom">/ 40</div>
+        </div>
+        <div class="score-grade" id="score-grade">—</div>
+        <div class="score-desc" id="score-desc">—</div>
+      </div>
+      <div class="categories-grid">
+        <div class="cat-item">
+          <div class="cat-name">Volume & Quality</div>
+          <div class="cat-score" id="cat-1">0 / 8</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-fill-1" style="width:0%"></div></div>
+        </div>
+        <div class="cat-item">
+          <div class="cat-name">Process & Velocity</div>
+          <div class="cat-score" id="cat-2">0 / 8</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-fill-2" style="width:0%"></div></div>
+        </div>
+        <div class="cat-item">
+          <div class="cat-name">Execution & Ops</div>
+          <div class="cat-score" id="cat-3">0 / 8</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-fill-3" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixes-card">
+      <div class="fixes-header"><i class="fa-solid fa-triangle-exclamation"></i> Priority Fixes</div>
+      <div id="fixes-list"></div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <button class="retake-btn" onclick="retake()"><i class="fa-solid fa-rotate-left"></i> Retake the Assessment</button>
+    </div>
+
+    <div class="cta-card">
+      <div class="kofi-block">
+        <h3>☕ Found this useful?</h3>
+        <p>This tool is completely free. If it gave you clarity on your pipeline, a coffee keeps the tools coming.</p>
+        <a href="https://ko-fi.com/fractionaltools" class="btn btn-outline"><i class="fa-solid fa-mug-hot"></i> Buy me a coffee</a>
+      </div>
+      <div class="cta-divider"><span>or go deeper</span></div>
+      <div class="product-block">
+        <h3>Want the complete Sales system?</h3>
+        <p>This score shows you where the gaps are. The full B2B Sales Consultant Toolkit gives you every playbook, template, and framework to fix them.</p>
+        <div class="product-feats">
+          <div class="feat"><i class="fa-solid fa-check"></i> Sales Health Audit — 56 questions across 8 categories</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> Monthly Sales Dashboard with pipeline by stage</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> Discovery Call Playbook + Proposal & SOW templates</div>
+        </div>
+        <a href="https://fractionaltools.gumroad.com/l/b2b-sales-consultant-toolkit" class="btn btn-primary">Get the Sales Toolkit →</a>
+        <span class="btn-sub">One-time purchase · Instant access · 7-day money-back guarantee</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  // ── STATE ─────────────────────────────────────────────────────────────────────
+  let currentQ = 0;
+  const scores = new Array(10).fill(0);
+  const totalQ = 10;
+
+  // ── QUESTION NAVIGATION ───────────────────────────────────────────────────────
+  function selectOption(el, qIndex) {
+    const card = el.closest('.question-card');
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores[qIndex] = parseInt(el.dataset.score);
+    document.getElementById('btn-next-' + qIndex).disabled = false;
+  }
+
+  function nextQ() {
+    if (scores[currentQ] === 0) return;
+    const cards = document.querySelectorAll('.question-card');
+    cards[currentQ].classList.remove('active');
+    currentQ++;
+    if (currentQ < totalQ) {
+      cards[currentQ].classList.add('active');
+      updateProgress();
+    }
+  }
+
+  function prevQ() {
+    if (currentQ === 0) return;
+    const cards = document.querySelectorAll('.question-card');
+    cards[currentQ].classList.remove('active');
+    currentQ--;
+    cards[currentQ].classList.add('active');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = ((currentQ + 1) / totalQ) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = (currentQ + 1) + ' / ' + totalQ;
+  }
+
+  // ── RESULTS ───────────────────────────────────────────────────────────────────
+  function showResults() {
+    if (scores[9] === 0) return;
+
+    document.getElementById('questions').style.display = 'none';
+    document.getElementById('progress-bar').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+
+    const total = scores.reduce((a, b) => a + b, 0);
+    const pct = Math.round((total / 40) * 100);
+
+    // Category scores
+    const vol  = scores[0] + scores[1]; // Volume & Quality
+    const proc = scores[2] + scores[3]; // Process & Velocity
+    const win  = scores[4] + scores[5]; // Win Rate & CRM
+    const pros = scores[6] + scores[7]; // Prospecting & Forecast
+    const qual = scores[8] + scores[9]; // Qualification & Alignment
+
+    // Display total
+    document.getElementById('score-number').textContent = total;
+
+    // Grade and color
+    let grade, desc, color, bgColor;
+    if (total >= 36) {
+      grade = 'Pipeline is Strong'; color = '#34D399'; bgColor = 'rgba(52,211,153,0.1)';
+      desc = 'Your pipeline is operating at a high level. Focus on maintaining consistency and scaling what works.';
+    } else if (total >= 28) {
+      grade = 'Solid — Room to Improve'; color = '#F0B429'; bgColor = 'rgba(240,180,41,0.1)';
+      desc = 'A good foundation with clear areas to strengthen. Address the priority fixes below to push to the next level.';
+    } else if (total >= 20) {
+      grade = 'Needs Attention'; color = '#FB923C'; bgColor = 'rgba(251,146,60,0.1)';
+      desc = 'Several significant gaps are limiting pipeline performance. The fixes below will have the biggest impact.';
+    } else {
+      grade = 'Critical — Immediate Action Required'; color = '#F87171'; bgColor = 'rgba(248,113,113,0.1)';
+      desc = 'Your pipeline has fundamental gaps that are directly impacting revenue. Start with the top priority fixes immediately.';
+    }
+
+    document.getElementById('score-grade').textContent = grade;
+    document.getElementById('score-grade').style.color = color;
+    document.getElementById('score-desc').textContent = desc;
+    const circle = document.getElementById('score-circle');
+    circle.style.borderColor = color;
+    circle.style.background = bgColor;
+    document.getElementById('score-number').style.color = color;
+
+    // Category breakdown (3 groups of ~3 questions each)
+    const cats = [
+      { id: 1, score: vol + scores[4],   max: 12 },
+      { id: 2, score: proc,              max: 8  },
+      { id: 3, score: pros + qual,       max: 16 },
+    ];
+
+    cats.forEach(cat => {
+      const pctCat = (cat.score / cat.max) * 100;
+      const catColor = pctCat >= 75 ? '#34D399' : pctCat >= 50 ? '#F0B429' : '#F87171';
+      document.getElementById('cat-' + cat.id).textContent = cat.score + ' / ' + cat.max;
+      document.getElementById('cat-' + cat.id).style.color = catColor;
+      document.getElementById('cat-fill-' + cat.id).style.width = pctCat + '%';
+      document.getElementById('cat-fill-' + cat.id).style.background = catColor;
+    });
+
+    // Priority fixes — based on lowest scoring answers
+    const fixMap = [
+      { q: 0, score: scores[0], priority: 1, title: 'Build pipeline coverage to 3x quota', desc: 'You need at least 3x your monthly quota in active pipeline to reliably hit targets. Map your current coverage and build a prospecting plan to close the gap.' },
+      { q: 1, score: scores[1], priority: 1, title: 'Define and enforce your ICP', desc: 'Document your Ideal Customer Profile — company size, industry, pain points, budget. Review your current pipeline against it and remove or deprioritize non-ICP deals.' },
+      { q: 2, score: scores[2], priority: 2, title: 'Redefine pipeline stages around buyer actions', desc: 'Each stage should represent a specific buyer action (e.g., "Demo completed" not "Demo scheduled"). Retrain the team and enforce stage discipline in the CRM.' },
+      { q: 3, score: scores[3], priority: 2, title: 'Purge stale deals and enforce deal aging rules', desc: 'Set a maximum deal age per stage. Any deal exceeding it should be marked at-risk or removed. A clean pipeline is more valuable than a large one.' },
+      { q: 4, score: scores[4], priority: 1, title: 'Diagnose why deals are being lost', desc: 'Interview the last 10 lost deals. Identify the 2-3 most common loss reasons and address them in your sales process, messaging, or qualification criteria.' },
+      { q: 5, score: scores[5], priority: 2, title: 'Implement a CRM hygiene standard', desc: 'Define required fields per stage. Run a weekly CRM audit. Assign ownership for data quality. Tie CRM updates to commission reporting so reps have an incentive.' },
+      { q: 6, score: scores[6], priority: 1, title: 'Build a systematic weekly prospecting cadence', desc: 'Set a non-negotiable outbound target per rep per week. Use a multi-channel sequence (email, LinkedIn, phone). Track activity in the CRM.' },
+      { q: 7, score: scores[7], priority: 2, title: 'Improve forecast accuracy with better stage criteria', desc: 'Review every deal in your current forecast. For each deal in the final two stages, confirm you have a specific next step with a buyer-committed date.' },
+      { q: 8, score: scores[8], priority: 1, title: 'Implement a deal qualification framework', desc: 'Adopt MEDDIC or BANT as your minimum qualification standard. Train reps to ask qualification questions in discovery. No deal enters the pipeline without a qualified budget, authority, and timeline.' },
+      { q: 9, score: scores[9], priority: 3, title: 'Align sales and marketing on MQL/SQL definitions', desc: 'Hold a joint session to agree on lead definitions, handoff SLAs, and pipeline targets. Set up a monthly alignment meeting to review lead quality feedback.' },
+    ];
+
+    // Sort by score (lowest first = highest priority) then by priority
+    const fixes = fixMap
+      .filter(f => f.score <= 2)
+      .sort((a, b) => a.score - b.score || a.priority - b.priority)
+      .slice(0, 5);
+
+    const fixesList = document.getElementById('fixes-list');
+    fixesList.innerHTML = '';
+
+    if (fixes.length === 0) {
+      fixesList.innerHTML = '<div style="padding:20px 24px;font-size:14px;color:var(--text2)">🟢 No critical gaps found. Your pipeline is in strong shape — focus on scaling what works.</div>';
+    } else {
+      fixes.forEach((fix, i) => {
+        const pClass = fix.score === 1 ? 'fix-p1' : fix.score === 2 ? 'fix-p2' : 'fix-p3';
+        const pLabel = fix.score === 1 ? 'P1' : fix.score === 2 ? 'P2' : 'P3';
+        fixesList.innerHTML += `
+          <div class="fix-item">
+            <div class="fix-priority ${pClass}">${pLabel}</div>
+            <div>
+              <div class="fix-title">${fix.title}</div>
+              <div class="fix-desc">${fix.desc}</div>
+            </div>
+          </div>`;
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function retake() {
+    currentQ = 0;
+    scores.fill(0);
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    document.querySelectorAll('.question-card').forEach((c, i) => {
+      c.classList.toggle('active', i === 0);
+    });
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('questions').style.display = 'block';
+    document.getElementById('progress-bar').style.display = 'flex';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── THEME ─────────────────────────────────────────────────────────────────────
+  function toggleTheme() {
+    const body = document.body, btn = document.getElementById('theme-btn');
+    if (body.classList.contains('light')) {
+      body.classList.remove('light'); btn.textContent = '🌙';
+      localStorage.setItem('ft-theme', 'dark');
+    } else {
+      body.classList.add('light'); btn.textContent = '☀️';
+      localStorage.setItem('ft-theme', 'light');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('ft-theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀️';
+    }
+  });
+</script>
+</body>
+</html>
