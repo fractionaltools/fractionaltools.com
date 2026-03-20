@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free marketing audit score for fractional CMOs and marketing consultants. Score your client's marketing across 6 categories and get an instant diagnosis with priority fixes.">
+<meta property="og:title" content="Marketing Audit Score — Fractional Tools">
+<meta property="og:description" content="Audit your client's marketing in 3 minutes. Free, instant, no signup.">
+<title>Marketing Audit Score — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📣</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#080C10;--surface:#0E1318;--surface2:#141A21;
+    --border:#1E2730;--border2:#263040;
+    --accent:#F472B6;--accent2:#F9A8D4;
+    --accent-bg:rgba(244,114,182,0.07);--accent-border:rgba(244,114,182,0.25);
+    --text:#E8EEF5;--text2:#8A99A8;--text3:#4A5568;
+    --success:#34D399;--warning:#F0B429;--danger:#F87171;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(244,114,182,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(244,114,182,.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  body.light{--bg:#F7F7F5;--surface:#FFF;--surface2:#F0F0ED;--border:#E5E5E2;--border2:#D4D4D0;--accent:#BE185D;--accent2:#DB2777;--accent-bg:rgba(190,24,93,.06);--accent-border:rgba(190,24,93,.2);--text:#1A1A1A;--text2:#6B7280;--text3:#9CA3AF;--success:#059669;--danger:#DC2626}
+  body.light::before{background-image:linear-gradient(rgba(190,24,93,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(190,24,93,.02) 1px,transparent 1px)}
+  body.light nav{background:rgba(247,247,245,.92)}
+  body.light .theme-toggle{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px}
+  .nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:15px}
+  .nav-logo .icon{width:30px;height:30px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .nav-title{font-size:14px;font-weight:600;color:var(--text2);position:absolute;left:50%;transform:translateX(-50%)}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:8px;transition:all .15s ease}
+  .nav-links a:hover{color:var(--text);background:var(--surface2)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s ease;flex-shrink:0;font-family:inherit}
+  .theme-toggle:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  @media(max-width:600px){.nav-title{display:none}.hide-mobile{display:none}}
+
+  .main{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+  /* ── INTRO CARD ── */
+  .intro-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:24px;display:flex;align-items:flex-start;gap:20px}
+  .intro-icon{width:48px;height:48px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-border);display:grid;place-items:center;font-size:22px;flex-shrink:0}
+  .intro-title{font-size:16px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+  .intro-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+  /* ── CATEGORY TRACK ── */
+  .cat-track{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:8px;overflow-x:auto}
+  .cat-pill{font-size:11px;font-weight:600;padding:5px 12px;border-radius:99px;border:1px solid var(--border);color:var(--text3);white-space:nowrap;transition:all .2s ease;flex-shrink:0}
+  .cat-pill.active{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .cat-pill.done{border-color:rgba(52,211,153,.3);color:#34D399;background:rgba(52,211,153,.08)}
+  .cat-track-divider{width:20px;height:1px;background:var(--border);flex-shrink:0}
+
+  /* ── PROGRESS ── */
+  .progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+  .progress-label{font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}
+  .progress-track{flex:1;height:5px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+  .progress-count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+
+  /* ── QUESTION CARDS ── */
+  .question-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:16px;display:none;animation:fadeUp .3s ease both}
+  .question-card.active{display:block}
+  .q-top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .q-cat-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+  .q-number{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);font-weight:500}
+  .q-text{font-size:18px;font-weight:700;letter-spacing:-.4px;line-height:1.4;margin-bottom:6px}
+  .q-context{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:24px;padding:12px 16px;background:var(--surface2);border-radius:8px;border-left:2px solid var(--accent-border)}
+
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:14px 20px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s ease;font-size:14px;font-weight:500;color:var(--text2);line-height:1.4}
+  .option:hover{border-color:var(--accent-border);color:var(--text);background:var(--accent-bg)}
+  .option.selected{border-color:var(--accent);background:var(--accent-bg);color:var(--text)}
+  .option-score{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;background:var(--border2);color:var(--text3);transition:all .15s ease;margin-top:1px}
+  .option.selected .option-score{background:var(--accent);color:#080C10}
+
+  .q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+  .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s ease;font-family:'Sora',sans-serif;border:none}
+  .btn-back{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+  .btn-back:hover{border-color:var(--border2);color:var(--text)}
+  .btn-next{background:var(--accent);color:#080C10}
+  .btn-next:hover{background:var(--accent2);transform:translateY(-1px)}
+  .btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+  /* ── RESULTS ── */
+  #results{display:none;animation:fadeUp .4s ease both}
+
+  .score-hero{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:20px}
+  .score-top{padding:40px 32px 28px;text-align:center;border-bottom:1px solid var(--border)}
+  .score-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:16px}
+
+  .score-circle{width:148px;height:148px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;border:3px solid var(--accent);background:var(--accent-bg)}
+  .score-num{font-family:'IBM Plex Mono',monospace;font-size:44px;font-weight:600;line-height:1;letter-spacing:-2px}
+  .score-den{font-size:13px;color:var(--text3);margin-top:3px}
+
+  .score-grade{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+  .score-desc{font-size:14px;color:var(--text2);max-width:460px;margin:0 auto;line-height:1.65}
+
+  /* Category grid */
+  .cat-results{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+  .cat-r{padding:18px 20px;border-right:1px solid var(--border);text-align:center}
+  .cat-r:last-child{border-right:none}
+  .cat-r-name{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+  .cat-r-score{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;margin-bottom:2px}
+  .cat-r-label{font-size:10px;color:var(--text3);margin-bottom:6px}
+  .cat-bar{height:3px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .cat-fill{height:100%;border-radius:99px;transition:width .7s ease}
+
+  /* Fixes */
+  .fixes-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+  .fixes-header{padding:16px 24px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:8px}
+  .fixes-header i{color:var(--accent)}
+  .fix-item{display:flex;align-items:flex-start;gap:16px;padding:18px 24px;border-bottom:1px solid var(--border);transition:background .15s ease}
+  .fix-item:last-child{border-bottom:none}
+  .fix-item:hover{background:var(--surface2)}
+  .fix-badge{padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;flex-shrink:0;margin-top:3px;white-space:nowrap}
+  .fix-p1{background:rgba(248,113,113,.12);color:#F87171;border:1px solid rgba(248,113,113,.3)}
+  .fix-p2{background:rgba(240,180,41,.12);color:#F0B429;border:1px solid rgba(240,180,41,.3)}
+  .fix-p3{background:rgba(52,211,153,.12);color:#34D399;border:1px solid rgba(52,211,153,.3)}
+  .fix-content{}
+  .fix-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .fix-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px}
+  .fix-action{font-size:12px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px}
+
+  .retake-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;font-family:'Sora',sans-serif;transition:all .15s ease}
+  .retake-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+
+  /* CTA */
+  .cta-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;margin-bottom:20px}
+  .cta-divider{display:flex;align-items:center;gap:16px;margin:28px 0}
+  .cta-divider::before,.cta-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+  .cta-divider span{font-size:12px;color:var(--text3)}
+  .kofi-block,.product-block{max-width:460px;margin:0 auto}
+  .kofi-block h3,.product-block h3{font-size:20px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+  .kofi-block p,.product-block p{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s ease;border:none;font-family:'Sora',sans-serif}
+  .btn:active{transform:scale(.98)}
+  .btn-outline{border:1px solid var(--border2);color:var(--text2);background:transparent}
+  .btn-outline:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .btn-primary{background:var(--accent);color:#080C10}
+  .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(244,114,182,.3)}
+  .product-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;text-align:left;max-width:320px;margin-left:auto;margin-right:auto}
+  .feat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+  .feat i{color:var(--success);font-size:11px}
+  .btn-sub{display:block;font-size:11px;color:var(--text3);margin-top:10px}
+
+  /* Footer */
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-logo{font-size:14px;font-weight:700;color:var(--text2);text-decoration:none;transition:color .15s ease}
+  .footer-logo:hover{color:var(--accent)}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+  .footer-links a{font-size:12px;color:var(--text3);text-decoration:none;transition:color .15s ease}
+  .footer-links a:hover{color:var(--accent)}
+  .footer-copy{font-size:12px;color:var(--text3)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:700px){
+    .q-text{font-size:16px}
+    .cat-results{grid-template-columns:1fr 1fr}
+    .cat-r:nth-child(3){border-top:1px solid var(--border);border-right:none}
+    .cta-card{padding:32px 20px}
+    .cat-track{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="icon">🛠️</span>Fractional Tools</a>
+    <div class="nav-title">Marketing Audit Score</div>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- INTRO -->
+  <div class="intro-card" id="intro-card">
+    <div class="intro-icon">📋</div>
+    <div>
+      <div class="intro-title">How to use this audit</div>
+      <div class="intro-desc">Answer each question based on what you observe about <strong>your client's marketing</strong> — not your own. Be honest: a low score is more useful than a flattering one. 12 questions · ~3 minutes · instant scored report with priority fixes.</div>
+    </div>
+  </div>
+
+  <!-- CATEGORY TRACK -->
+  <div class="cat-track" id="cat-track">
+    <div class="cat-pill active" id="pill-0">Strategy</div>
+    <div class="cat-track-divider"></div>
+    <div class="cat-pill" id="pill-1">Audience</div>
+    <div class="cat-track-divider"></div>
+    <div class="cat-pill" id="pill-2">Website</div>
+    <div class="cat-track-divider"></div>
+    <div class="cat-pill" id="pill-3">Content & SEO</div>
+    <div class="cat-track-divider"></div>
+    <div class="cat-pill" id="pill-4">Channels</div>
+    <div class="cat-track-divider"></div>
+    <div class="cat-pill" id="pill-5">Analytics</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progress-bar">
+    <span class="progress-label">Marketing Audit</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:8.33%"></div></div>
+    <span class="progress-count" id="progress-count">1 / 12</span>
+  </div>
+
+  <div id="questions">
+
+    <!-- Q1: STRATEGY -->
+    <div class="question-card active" data-q="0" data-cat="0">
+      <div class="q-top"><span class="q-cat-badge">Strategy</span><span class="q-number">Question 1 of 12</span></div>
+      <div class="q-text">Does your client have a documented marketing strategy aligned to their revenue goals?</div>
+      <div class="q-context">💡 A documented strategy defines who they're targeting, why buyers choose them, which channels they invest in, and how marketing contributes to revenue. Without it, everything is guesswork.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,0)"><div class="option-score">1</div>No strategy — marketing is completely reactive and ad hoc</div>
+        <div class="option" data-score="2" onclick="selectOption(this,0)"><div class="option-score">2</div>Informal strategy exists in someone's head but nothing is documented</div>
+        <div class="option" data-score="3" onclick="selectOption(this,0)"><div class="option-score">3</div>Documented strategy exists but is not consistently followed</div>
+        <div class="option" data-score="4" onclick="selectOption(this,0)"><div class="option-score">4</div>Clear documented strategy, reviewed quarterly, aligned to revenue targets</div>
+      </div>
+      <div class="q-nav"><div></div><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-0" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q2: STRATEGY -->
+    <div class="question-card" data-q="1" data-cat="0">
+      <div class="q-top"><span class="q-cat-badge">Strategy</span><span class="q-number">Question 2 of 12</span></div>
+      <div class="q-text">How clearly defined is the client's value proposition and competitive positioning?</div>
+      <div class="q-context">💡 A visitor should understand what the business does and why it's different within 5 seconds of landing on the website. If the messaging is generic, conversion rates will be low across every channel.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,1)"><div class="option-score">1</div>No clear value proposition — messaging is generic and could apply to anyone</div>
+        <div class="option" data-score="2" onclick="selectOption(this,1)"><div class="option-score">2</div>A value proposition exists but it's vague or sounds like every competitor</div>
+        <div class="option" data-score="3" onclick="selectOption(this,1)"><div class="option-score">3</div>Clear positioning but not applied consistently across channels</div>
+        <div class="option" data-score="4" onclick="selectOption(this,1)"><div class="option-score">4</div>Sharp, differentiated positioning consistently used across website, ads, and content</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-1" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q3: AUDIENCE -->
+    <div class="question-card" data-q="2" data-cat="1">
+      <div class="q-top"><span class="q-cat-badge">Audience</span><span class="q-number">Question 3 of 12</span></div>
+      <div class="q-text">How well does the client understand their ideal customer — who they are, why they buy, and what objections stop them?</div>
+      <div class="q-context">💡 Specificity drives conversion. "SMB owners" is not an audience. "Operations managers at 20–100 person SaaS companies struggling with churn" is. The more specific, the better the messaging and targeting.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,2)"><div class="option-score">1</div>No defined audience — they market to everyone and anyone</div>
+        <div class="option" data-score="2" onclick="selectOption(this,2)"><div class="option-score">2</div>Loose demographic profile (industry, size) but no deeper buyer understanding</div>
+        <div class="option" data-score="3" onclick="selectOption(this,2)"><div class="option-score">3</div>Documented persona with job title, pain points, and buying triggers</div>
+        <div class="option" data-score="4" onclick="selectOption(this,2)"><div class="option-score">4</div>Deep buyer research — personas validated with real customer interviews, objections mapped</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-2" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q4: WEBSITE -->
+    <div class="question-card" data-q="3" data-cat="2">
+      <div class="q-top"><span class="q-cat-badge">Website</span><span class="q-number">Question 4 of 12</span></div>
+      <div class="q-text">How effectively does the client's website convert visitors into leads or customers?</div>
+      <div class="q-context">💡 Traffic without conversion is wasted spend. Look for: clear CTAs above the fold, fast load times, social proof (testimonials, logos), and a frictionless contact or demo form. If conversion isn't tracked, it can't be improved.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,3)"><div class="option-score">1</div>No conversion tracking — they have no idea what visitors do on the site</div>
+        <div class="option" data-score="2" onclick="selectOption(this,3)"><div class="option-score">2</div>Conversion is tracked but the rate is poor with no optimization plan</div>
+        <div class="option" data-score="3" onclick="selectOption(this,3)"><div class="option-score">3</div>Clear CTAs and forms, conversion tracked, site performs reasonably</div>
+        <div class="option" data-score="4" onclick="selectOption(this,3)"><div class="option-score">4</div>Website actively optimized — A/B tested CTAs, landing pages, fast, proven buyer journey</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-3" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q5: WEBSITE -->
+    <div class="question-card" data-q="4" data-cat="2">
+      <div class="q-top"><span class="q-cat-badge">Website</span><span class="q-number">Question 5 of 12</span></div>
+      <div class="q-text">How strong is the social proof on the client's website — testimonials, case studies, logos, and reviews?</div>
+      <div class="q-context">💡 B2B buyers don't trust brands — they trust other buyers. A website without social proof leaves the visitor with no reason to believe the claims being made. Case studies with specific results outperform generic testimonials.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,4)"><div class="option-score">1</div>No social proof anywhere on the website</div>
+        <div class="option" data-score="2" onclick="selectOption(this,4)"><div class="option-score">2</div>A few generic quotes with no names, logos, or specific results</div>
+        <div class="option" data-score="3" onclick="selectOption(this,4)"><div class="option-score">3</div>Named testimonials and/or client logos on the website</div>
+        <div class="option" data-score="4" onclick="selectOption(this,4)"><div class="option-score">4</div>Detailed case studies with specific results, named clients, and reviews on third-party sites</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-4" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q6: CONTENT & SEO -->
+    <div class="question-card" data-q="5" data-cat="3">
+      <div class="q-top"><span class="q-cat-badge">Content & SEO</span><span class="q-number">Question 6 of 12</span></div>
+      <div class="q-text">How strategic and consistent is the client's content marketing — blog, guides, videos, or podcasts?</div>
+      <div class="q-context">💡 Random content produces random results. Effective content is mapped to buyer journey stages (Awareness → Consideration → Decision), targets specific search terms, and has a clear CTA at each stage.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,5)"><div class="option-score">1</div>No content marketing — no blog, no guides, nothing published</div>
+        <div class="option" data-score="2" onclick="selectOption(this,5)"><div class="option-score">2</div>Sporadic content published with no strategy, calendar, or goals</div>
+        <div class="option" data-score="3" onclick="selectOption(this,5)"><div class="option-score">3</div>Regular content with a calendar, but limited SEO or conversion focus</div>
+        <div class="option" data-score="4" onclick="selectOption(this,5)"><div class="option-score">4</div>Strategic content mapped to buyer journey, SEO-optimized, with tracked traffic and leads</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-5" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q7: CONTENT & SEO -->
+    <div class="question-card" data-q="6" data-cat="3">
+      <div class="q-top"><span class="q-cat-badge">Content & SEO</span><span class="q-number">Question 7 of 12</span></div>
+      <div class="q-text">How strong is the client's organic search presence — are they ranking for keywords their buyers actually search for?</div>
+      <div class="q-context">💡 Organic search delivers the highest ROI of any marketing channel long-term. A weak SEO presence means paying for traffic that could be free. Check: do they rank on page 1 for their top 5 target keywords?</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,6)"><div class="option-score">1</div>No SEO work done — they rank for almost nothing relevant</div>
+        <div class="option" data-score="2" onclick="selectOption(this,6)"><div class="option-score">2</div>Basic on-page SEO but no content strategy or link building</div>
+        <div class="option" data-score="3" onclick="selectOption(this,6)"><div class="option-score">3</div>Active SEO program — ranking for some target keywords with growing traffic</div>
+        <div class="option" data-score="4" onclick="selectOption(this,6)"><div class="option-score">4</div>Strong SEO — consistent organic traffic growth, page 1 rankings for high-intent keywords</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-6" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q8: CHANNELS -->
+    <div class="question-card" data-q="7" data-cat="4">
+      <div class="q-top"><span class="q-cat-badge">Channels</span><span class="q-number">Question 8 of 12</span></div>
+      <div class="q-text">How well managed and profitable are the client's paid advertising campaigns?</div>
+      <div class="q-context">💡 Unmanaged paid ads burn budget fast. Key signals: Is CAC (customer acquisition cost) known and below target? Is ROAS tracked? Are creatives being A/B tested? Are poor campaigns being paused?</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,7)"><div class="option-score">1</div>No paid ads — or ads running with zero tracking or optimization</div>
+        <div class="option" data-score="2" onclick="selectOption(this,7)"><div class="option-score">2</div>Ads running but CAC is unknown or clearly too high</div>
+        <div class="option" data-score="3" onclick="selectOption(this,7)"><div class="option-score">3</div>Ads tracked and reviewed monthly with CAC known</div>
+        <div class="option" data-score="4" onclick="selectOption(this,7)"><div class="option-score">4</div>Well-optimized campaigns — known CAC, ROAS, regular A/B testing, poor ads paused</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-7" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q9: CHANNELS -->
+    <div class="question-card" data-q="8" data-cat="4">
+      <div class="q-top"><span class="q-cat-badge">Channels</span><span class="q-number">Question 9 of 12</span></div>
+      <div class="q-text">How active and effective is the client's email marketing program?</div>
+      <div class="q-context">💡 Email delivers $36 return per $1 spent — the highest ROI of any digital channel. A dormant list or no email program is leaving money on the table. Key metrics: open rate above 25%, click rate above 3%.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,8)"><div class="option-score">1</div>No email list or email marketing at all</div>
+        <div class="option" data-score="2" onclick="selectOption(this,8)"><div class="option-score">2</div>Email list exists but it's rarely used or getting poor engagement</div>
+        <div class="option" data-score="3" onclick="selectOption(this,8)"><div class="option-score">3</div>Regular emails with reasonable engagement — open rates tracked</div>
+        <div class="option" data-score="4" onclick="selectOption(this,8)"><div class="option-score">4</div>Segmented program with automations, tracked revenue contribution, strong engagement</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-8" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q10: ANALYTICS -->
+    <div class="question-card" data-q="9" data-cat="5">
+      <div class="q-top"><span class="q-cat-badge">Analytics</span><span class="q-number">Question 10 of 12</span></div>
+      <div class="q-text">How well is the client's marketing performance measured and reported?</div>
+      <div class="q-context">💡 You can't improve what you don't measure. Without proper analytics, marketing decisions are based on gut feel. At minimum: website traffic, leads generated, CAC, and channel ROI should be reviewed monthly.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,9)"><div class="option-score">1</div>No analytics setup — no idea what's working</div>
+        <div class="option" data-score="2" onclick="selectOption(this,9)"><div class="option-score">2</div>Google Analytics installed but rarely reviewed or acted on</div>
+        <div class="option" data-score="3" onclick="selectOption(this,9)"><div class="option-score">3</div>Regular monthly reporting on key metrics with some action taken</div>
+        <div class="option" data-score="4" onclick="selectOption(this,9)"><div class="option-score">4</div>Full dashboard — attribution tracked, CAC and LTV known, decisions driven by data</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-9" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q11: ANALYTICS -->
+    <div class="question-card" data-q="10" data-cat="5">
+      <div class="q-top"><span class="q-cat-badge">Analytics</span><span class="q-number">Question 11 of 12</span></div>
+      <div class="q-text">How predictable and consistent is the client's lead generation — do they know where their next 10 leads will come from?</div>
+      <div class="q-context">💡 Feast-or-famine lead flow is a leading indicator of a broken marketing engine. A healthy system generates a predictable volume of qualified leads every month from at least 2–3 reliable channels.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,10)"><div class="option-score">1</div>No predictable lead generation — leads come in randomly</div>
+        <div class="option" data-score="2" onclick="selectOption(this,10)"><div class="option-score">2</div>Some lead gen activity but volume is inconsistent month to month</div>
+        <div class="option" data-score="3" onclick="selectOption(this,10)"><div class="option-score">3</div>Consistent leads from 2–3 channels with a rough monthly target</div>
+        <div class="option" data-score="4" onclick="selectOption(this,10)"><div class="option-score">4</div>Scalable multi-channel system — monthly lead target tracked and consistently hit</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nextQ()" id="btn-next-10" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q12: ANALYTICS -->
+    <div class="question-card" data-q="11" data-cat="5">
+      <div class="q-top"><span class="q-cat-badge">Analytics</span><span class="q-number">Question 12 of 12</span></div>
+      <div class="q-text">How aligned are marketing and sales on lead definitions, quality standards, and pipeline goals?</div>
+      <div class="q-context">💡 Misalignment between marketing and sales costs B2B companies an estimated 10% of revenue annually. Symptoms: sales says leads are poor quality, marketing says sales doesn't follow up fast enough.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="selectOption(this,11)"><div class="option-score">1</div>Marketing and sales operate in complete silos with no collaboration</div>
+        <div class="option" data-score="2" onclick="selectOption(this,11)"><div class="option-score">2</div>Some communication but frequent friction over lead quality</div>
+        <div class="option" data-score="3" onclick="selectOption(this,11)"><div class="option-score">3</div>Regular alignment meetings with shared pipeline visibility</div>
+        <div class="option" data-score="4" onclick="selectOption(this,11)"><div class="option-score">4</div>Fully aligned — agreed MQL/SQL definitions, SLAs, shared revenue goals</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prevQ()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next btn-primary" onclick="showResults()" id="btn-next-11" disabled>See My Score <i class="fa-solid fa-chart-bar"></i></button></div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <div class="score-hero">
+      <div class="score-top">
+        <div class="score-eyebrow">Marketing Audit Score</div>
+        <div class="score-circle" id="score-circle">
+          <div class="score-num" id="score-num">0</div>
+          <div class="score-den">/ 48</div>
+        </div>
+        <div class="score-grade" id="score-grade">—</div>
+        <div class="score-desc" id="score-desc">—</div>
+      </div>
+
+      <div class="cat-results">
+        <div class="cat-r">
+          <div class="cat-r-name">Strategy</div>
+          <div class="cat-r-score" id="cat-s">0 / 8</div>
+          <div class="cat-r-label" id="cat-sl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-sf" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">Audience & Website</div>
+          <div class="cat-r-score" id="cat-a">0 / 12</div>
+          <div class="cat-r-label" id="cat-al">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-af" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">Content & SEO</div>
+          <div class="cat-r-score" id="cat-c">0 / 8</div>
+          <div class="cat-r-label" id="cat-cl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-cf" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r" style="border-right:none">
+          <div class="cat-r-name">Channels & Analytics</div>
+          <div class="cat-r-score" id="cat-ch">0 / 20</div>
+          <div class="cat-r-label" id="cat-chl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-chf" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixes-card">
+      <div class="fixes-header"><i class="fa-solid fa-triangle-exclamation"></i> Priority Fixes</div>
+      <div id="fixes-list"></div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <button class="retake-btn" onclick="retake()"><i class="fa-solid fa-rotate-left"></i> Retake the Audit</button>
+    </div>
+
+    <div class="cta-card">
+      <div class="kofi-block">
+        <h3>☕ Found this useful?</h3>
+        <p>This audit is completely free. If it helped you diagnose your client's marketing gaps faster, a coffee keeps the tools coming.</p>
+        <a href="https://ko-fi.com/fractionaltools" class="btn btn-outline"><i class="fa-solid fa-mug-hot"></i> Buy me a coffee</a>
+      </div>
+      <div class="cta-divider"><span>or go deeper</span></div>
+      <div class="product-block">
+        <h3>Want the complete CMO system?</h3>
+        <p>This score tells you where the gaps are. The full Fractional CMO Toolkit gives you the templates, playbooks, and frameworks to fix them — and run a professional CMO practice.</p>
+        <div class="product-feats">
+          <div class="feat"><i class="fa-solid fa-check"></i> Marketing Health Audit — 48 questions, 8 categories</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> Monthly Marketing Dashboard + CMO Pricing Calculator</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> 30-60-90 Day CMO Onboarding Plan + Discovery Playbook</div>
+        </div>
+        <a href="https://fractionaltools.gumroad.com/l/fractional-cmo-toolkit" class="btn btn-primary">Get the CMO Toolkit →</a>
+        <span class="btn-sub">One-time purchase · Instant access · 7-day money-back guarantee</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  // ── DATA ─────────────────────────────────────────────────────────────────────
+  const totalQ = 12;
+  let currentQ = 0;
+  const scores = new Array(totalQ).fill(0);
+
+  // Category pill map: question index → pill index
+  const qCatMap = [0,0, 1,2,2, 3,3, 4,4, 5,5,5];
+
+  // ── NAVIGATION ───────────────────────────────────────────────────────────────
+  function selectOption(el, qi) {
+    el.closest('.question-card').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores[qi] = parseInt(el.dataset.score);
+    document.getElementById('btn-next-' + qi).disabled = false;
+  }
+
+  function nextQ() {
+    if (!scores[currentQ]) return;
+    document.querySelectorAll('.question-card')[currentQ].classList.remove('active');
+    currentQ++;
+    if (currentQ < totalQ) {
+      document.querySelectorAll('.question-card')[currentQ].classList.add('active');
+      updateUI();
+    }
+  }
+
+  function prevQ() {
+    if (currentQ === 0) return;
+    document.querySelectorAll('.question-card')[currentQ].classList.remove('active');
+    currentQ--;
+    document.querySelectorAll('.question-card')[currentQ].classList.add('active');
+    updateUI();
+  }
+
+  function updateUI() {
+    // Progress
+    const pct = ((currentQ + 1) / totalQ) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = (currentQ + 1) + ' / ' + totalQ;
+
+    // Category pills
+    const activePill = qCatMap[currentQ];
+    for (let i = 0; i < 6; i++) {
+      const pill = document.getElementById('pill-' + i);
+      if (i < activePill) { pill.className = 'cat-pill done'; }
+      else if (i === activePill) { pill.className = 'cat-pill active'; }
+      else { pill.className = 'cat-pill'; }
+    }
+  }
+
+  // ── RESULTS ──────────────────────────────────────────────────────────────────
+  function catColor(pct) {
+    return pct >= 75 ? '#34D399' : pct >= 50 ? '#F0B429' : '#F87171';
+  }
+
+  function catLabel(pct) {
+    return pct >= 75 ? 'Strong' : pct >= 50 ? 'Acceptable' : 'Needs Work';
+  }
+
+  function showResults() {
+    if (!scores[11]) return;
+    document.getElementById('questions').style.display = 'none';
+    document.getElementById('progress-bar').style.display = 'none';
+    document.getElementById('cat-track').style.display = 'none';
+    document.getElementById('intro-card').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+
+    const total = scores.reduce((a, b) => a + b, 0);
+
+    // Category totals
+    const strategy  = scores[0] + scores[1];                     // 2q max 8
+    const audience  = scores[2] + scores[3] + scores[4];         // 3q max 12
+    const content   = scores[5] + scores[6];                     // 2q max 8
+    const channels  = scores[7] + scores[8] + scores[9] + scores[10] + scores[11]; // 5q max 20
+
+    // Score display
+    const sEl = document.getElementById('score-num');
+    sEl.textContent = total;
+
+    // Grade
+    let grade, desc, color, bg;
+    if (total >= 43)      { grade='Marketing is Strong';               color='#34D399'; bg='rgba(52,211,153,0.1)';  desc='The marketing engine is operating well. Focus on optimizing the best-performing channels and scaling what works.'; }
+    else if (total >= 33) { grade='Solid Foundation — Room to Grow';   color='#F0B429'; bg='rgba(240,180,41,0.1)';  desc='Good fundamentals with clear opportunities. The priority fixes below will accelerate growth without major restructuring.'; }
+    else if (total >= 22) { grade='Needs Significant Work';            color='#FB923C'; bg='rgba(251,146,60,0.1)';  desc='Several gaps are limiting marketing effectiveness and directly impacting lead generation. Address the priority fixes below.'; }
+    else                  { grade='Critical — Marketing Engine Broken'; color='#F87171'; bg='rgba(248,113,113,0.1)'; desc='Fundamental marketing gaps are costing the business revenue every month. Start with the top priority fixes immediately.'; }
+
+    document.getElementById('score-grade').textContent = grade;
+    document.getElementById('score-grade').style.color = color;
+    document.getElementById('score-desc').textContent = desc;
+    const circle = document.getElementById('score-circle');
+    circle.style.borderColor = color; circle.style.background = bg;
+    sEl.style.color = color;
+
+    // Category results
+    const cats = [
+      { scoreEl:'cat-s',  labelEl:'cat-sl',  fillEl:'cat-sf',  score:strategy, max:8  },
+      { scoreEl:'cat-a',  labelEl:'cat-al',  fillEl:'cat-af',  score:audience, max:12 },
+      { scoreEl:'cat-c',  labelEl:'cat-cl',  fillEl:'cat-cf',  score:content,  max:8  },
+      { scoreEl:'cat-ch', labelEl:'cat-chl', fillEl:'cat-chf', score:channels, max:20 },
+    ];
+    cats.forEach(c => {
+      const pct = (c.score / c.max) * 100;
+      const col = catColor(pct);
+      document.getElementById(c.scoreEl).textContent = c.score + ' / ' + c.max;
+      document.getElementById(c.scoreEl).style.color = col;
+      document.getElementById(c.labelEl).textContent = catLabel(pct);
+      document.getElementById(c.labelEl).style.color = col;
+      document.getElementById(c.fillEl).style.width = pct + '%';
+      document.getElementById(c.fillEl).style.background = col;
+    });
+
+    // Priority fixes
+    const fixMap = [
+      { qi:0,  s:scores[0],  title:'Document the marketing strategy',
+        desc:'Schedule a half-day strategy session. Document: target audience, key value proposition, primary channels, quarterly goals, and how marketing contributes to revenue.',
+        action:'Deliverable: a one-page marketing strategy reviewed in every leadership meeting.' },
+      { qi:1,  s:scores[1],  title:'Rewrite the value proposition',
+        desc:'Test the website homepage: can a stranger explain what the business does and why it\'s different in 5 seconds? If not, rewrite the headline using this formula: [We help X] [do Y] [without Z].',
+        action:'Deliverable: one headline, tested with 5 potential buyers before publishing.' },
+      { qi:2,  s:scores[2],  title:'Build buyer personas from real interviews',
+        desc:'Interview 5 of the client\'s best customers. Ask: what problem were you solving, what almost stopped you from buying, and what would you tell someone like you? Document the answers into a persona.',
+        action:'Deliverable: one detailed buyer persona used to guide all messaging and content.' },
+      { qi:3,  s:scores[3],  title:'Set up conversion tracking and optimize CTAs',
+        desc:'Install Google Analytics 4 and set up goal tracking for every form submission. Add a clear CTA above the fold on every key page. Review the top 3 pages by traffic and add a lead capture element to each.',
+        action:'Deliverable: conversion rate baseline set, CTAs live on top 3 pages.' },
+      { qi:4,  s:scores[4],  title:'Add case studies with specific results',
+        desc:'Contact the 3 best clients and request a 20-minute interview. Document: the problem before, the solution, and the specific result (numbers, percentages, time saved). Publish on the website.',
+        action:'Deliverable: 3 case studies live on website within 30 days.' },
+      { qi:5,  s:scores[5],  title:'Build a content calendar mapped to buyer journey',
+        desc:'Map the buyer journey (Awareness → Consideration → Decision). Plan 12 pieces of content — 4 per stage. Each piece should target a specific keyword or answer a question buyers ask at that stage.',
+        action:'Deliverable: 12-piece content calendar for next 3 months.' },
+      { qi:6,  s:scores[6],  title:'Start an SEO program with keyword targeting',
+        desc:'Use Ubersuggest or Ahrefs free tier. Find 20 keywords buyers search for. Pick the 5 with highest intent and lowest competition. Create one piece of optimized content per week targeting these terms.',
+        action:'Deliverable: 5 target keywords identified, content plan created.' },
+      { qi:7,  s:scores[7],  title:'Fix paid advertising tracking and calculate CAC',
+        desc:'Set up proper conversion tracking in Google Ads or Meta Ads Manager. Calculate CAC for each campaign. Pause any campaign where CAC exceeds the acceptable threshold. Run one A/B test per month.',
+        action:'Deliverable: CAC known per channel, underperforming campaigns paused.' },
+      { qi:8,  s:scores[8],  title:'Activate the email list with a weekly cadence',
+        desc:'Send one email per week minimum. Set up a 3-email welcome sequence for new subscribers. Segment the list into leads vs customers — they should receive different content.',
+        action:'Deliverable: welcome sequence live, weekly email schedule committed to.' },
+      { qi:9,  s:scores[9],  title:'Build a monthly marketing reporting dashboard',
+        desc:'Create a simple dashboard tracking: website visits, leads generated this month, lead source breakdown, CAC per channel, and revenue influenced by marketing. Review in every leadership meeting.',
+        action:'Deliverable: marketing dashboard built and shared with leadership.' },
+      { qi:10, s:scores[10], title:'Build a predictable lead generation system',
+        desc:'Identify the 2 channels generating the most qualified leads. Double investment in those channels. Set a monthly lead target and track it weekly. Feast-or-famine is always a systems problem.',
+        action:'Deliverable: 2 primary lead channels identified, monthly target set.' },
+      { qi:11, s:scores[11], title:'Align marketing and sales on MQL/SQL definitions',
+        desc:'Run a 60-minute joint session with marketing and sales. Agree on: what is a Marketing Qualified Lead, what is a Sales Qualified Lead, how fast should sales follow up, and what feedback loop exists.',
+        action:'Deliverable: agreed definitions documented, monthly alignment meeting scheduled.' },
+    ];
+
+    const fixes = fixMap.filter(f => f.s <= 2).sort((a, b) => a.s - b.s).slice(0, 5);
+    const list = document.getElementById('fixes-list');
+    list.innerHTML = '';
+
+    if (!fixes.length) {
+      list.innerHTML = '<div style="padding:20px 24px;font-size:14px;color:var(--text2)">🟢 No critical gaps found. Marketing is performing well — focus on optimizing and scaling.</div>';
+    } else {
+      fixes.forEach(f => {
+        const pc = f.s === 1 ? 'fix-p1' : 'fix-p2';
+        const pl = f.s === 1 ? 'Critical' : 'High';
+        list.innerHTML += `
+          <div class="fix-item">
+            <span class="fix-badge ${pc}">${pl}</span>
+            <div class="fix-content">
+              <div class="fix-title">${f.title}</div>
+              <div class="fix-desc">${f.desc}</div>
+              <div class="fix-action"><i class="fa-solid fa-arrow-right"></i> ${f.action}</div>
+            </div>
+          </div>`;
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function retake() {
+    currentQ = 0; scores.fill(0);
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    document.querySelectorAll('.question-card').forEach((c, i) => c.classList.toggle('active', i === 0));
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('questions').style.display = 'block';
+    document.getElementById('progress-bar').style.display = 'flex';
+    document.getElementById('cat-track').style.display = 'flex';
+    document.getElementById('intro-card').style.display = 'flex';
+    updateUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── THEME ─────────────────────────────────────────────────────────────────────
+  function toggleTheme() {
+    const body = document.body, btn = document.getElementById('theme-btn');
+    body.classList.contains('light')
+      ? (body.classList.remove('light'), btn.textContent='🌙', localStorage.setItem('ft-theme','dark'))
+      : (body.classList.add('light'),    btn.textContent='☀️', localStorage.setItem('ft-theme','light'));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('ft-theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀️';
+    }
+  });
+</script>
+</body>
+</html>
