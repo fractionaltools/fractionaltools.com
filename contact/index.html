@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Get in touch with Fractional Tools. Questions about our toolkits or free tools? Reach out on LinkedIn.">
+<title>Contact — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:            #080C10;
+    --surface:       #0E1318;
+    --surface2:      #141A21;
+    --border:        #1E2730;
+    --border2:       #263040;
+    --accent:        #4F9EFF;
+    --accent2:       #7BB8FF;
+    --accent-bg:     rgba(79,158,255,0.07);
+    --accent-border: rgba(79,158,255,0.25);
+    --text:          #E8EEF5;
+    --text2:         #8A99A8;
+    --text3:         #4A5568;
+    --success:       #34D399;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,158,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,158,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LIGHT MODE ── */
+  body.light {
+    --bg:            #F7F7F5;
+    --surface:       #FFFFFF;
+    --surface2:      #F0F0ED;
+    --border:        #E5E5E2;
+    --border2:       #D4D4D0;
+    --accent:        #2563EB;
+    --accent2:       #3B82F6;
+    --accent-bg:     rgba(37,99,235,0.06);
+    --accent-border: rgba(37,99,235,0.18);
+    --text:          #1A1A1A;
+    --text2:         #6B7280;
+    --text3:         #9CA3AF;
+    --success:       #059669;
+  }
+
+  body.light::before {
+    background-image:
+      linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
+  }
+
+  body.light nav { background: rgba(247,247,245,0.92); }
+
+  body.light .theme-toggle {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 58px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo .icon {
+    width: 30px;
+    height: 30px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+  .nav-links a.active { color: var(--accent); }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+    font-family: inherit;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  /* ── PAGE ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 24px 80px;
+    text-align: center;
+  }
+
+  .page h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    margin-bottom: 14px;
+  }
+
+  .page p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── CONTACT CARD ── */
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #0077B5, #00A0DC);
+  }
+
+  .contact-card:hover { border-color: var(--border2); }
+
+  .linkedin-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(0,119,181,0.1);
+    border: 1px solid rgba(0,119,181,0.25);
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    color: #0077B5;
+    margin: 0 auto 24px;
+  }
+
+  .contact-card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 10px;
+  }
+
+  .contact-card p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: #0077B5;
+    color: #ffffff;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .btn-linkedin:hover {
+    background: #006399;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,119,181,0.3);
+  }
+
+  .btn-linkedin:active { transform: scale(0.98); }
+
+  .response-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  /* ── FAQ ── */
+  .faq-section {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .faq-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .faq-label i { color: var(--accent); font-size: 11px; }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s ease;
+  }
+
+  .faq-item:hover { border-color: var(--border2); }
+
+  .faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .faq-a {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .faq-a a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .faq-a a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text2);
+    text-decoration: none;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 12px; color: var(--text3); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page { animation: fadeUp 0.4s ease both; }
+  .contact-card { animation: fadeUp 0.4s ease 0.05s both; }
+  .faq-item:nth-child(1) { animation: fadeUp 0.4s ease 0.1s both; }
+  .faq-item:nth-child(2) { animation: fadeUp 0.4s ease 0.15s both; }
+  .faq-item:nth-child(3) { animation: fadeUp 0.4s ease 0.2s both; }
+  .faq-item:nth-child(4) { animation: fadeUp 0.4s ease 0.25s both; }
+
+  @media (max-width: 600px) {
+    .contact-card { padding: 32px 20px; }
+    .nav-links .hide-mobile { display: none; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="icon">🛠️</span>
+      Fractional Tools
+    </a>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" id="theme-btn" title="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTACT -->
+<section class="page">
+  <h1>Get in touch</h1>
+  <p>Have a question about a toolkit, a suggestion for a new tool, or just want to connect? Reach out on LinkedIn — usually respond within 24 hours.</p>
+
+  <div class="contact-card">
+    <div class="linkedin-icon">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </div>
+    <h2>Connect on LinkedIn</h2>
+    <p>Send a message or connection request. Include a note so I know what you're reaching out about.</p>
+    <a href="https://www.linkedin.com/in/fractionaltools/" target="_blank" class="btn-linkedin">
+      <i class="fa-brands fa-linkedin-in"></i>
+      Visit LinkedIn Profile
+    </a>
+    <p class="response-note">Typical response time: within 24 hours</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-label">
+    <i class="fa-solid fa-circle-question"></i>
+    Common Questions
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">I bought a toolkit — where do I access it?</div>
+    <div class="faq-a">Check your email for the Gumroad receipt. It contains a link to download the Google Sheets file and access the Notion workspace. If you can't find it, check your spam folder or reach out on LinkedIn.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I get a refund?</div>
+    <div class="faq-a">Yes — 7-day money-back guarantee, no questions asked. Just message on LinkedIn or through Gumroad and it'll be processed within 24 hours.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I use the toolkits for multiple clients?</div>
+    <div class="faq-a">Yes. Duplicate each Notion template for every new client and keep the originals clean. The Google Sheets file can be imported into Google Drive and duplicated the same way.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">I have a suggestion for a new tool or toolkit.</div>
+    <div class="faq-a">Love to hear it. Send a message on <a href="https://www.linkedin.com/in/fractionaltools/" target="_blank">LinkedIn</a> — suggestions that get built get credited.</div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-btn');
+    if (body.classList.contains('light')) {
+      body.classList.remove('light');
+      btn.textContent = '🌙';
+      localStorage.setItem('ft-theme', 'dark');
+    } else {
+      body.classList.add('light');
+      btn.textContent = '☀️';
+      localStorage.setItem('ft-theme', 'light');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('ft-theme') === 'light') {
+      document.body.classList.add('light');
+      const btn = document.getElementById('theme-btn');
+      if (btn) btn.textContent = '☀️';
+    }
+  });
+</script>
+
+</body>
+</html>
