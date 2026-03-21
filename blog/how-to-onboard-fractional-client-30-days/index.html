@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How to onboard a new fractional consulting client in 30 days. A step-by-step playbook for fractional CMOs, CFOs, COOs, and CTOs — with free templates and tools.">
+<meta property="og:title" content="How to Onboard a New Fractional Client in 30 Days">
+<meta property="og:description" content="A step-by-step onboarding playbook for fractional consultants. What to do in week 1, week 2, and the end of month one.">
+<meta property="og:type" content="article">
+<title>How to Onboard a New Fractional Client in 30 Days — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#080C10;--surface:#0E1318;--surface2:#141A21;
+    --border:#1E2730;--border2:#263040;
+    --accent:#60A5FA;--accent2:#93C5FD;
+    --accent-bg:rgba(96,165,250,0.07);--accent-border:rgba(96,165,250,0.22);
+    --text:#E8EEF5;--text2:#8A99A8;--text3:#4A5568;
+    --success:#34D399;--warning:#F0B429;--danger:#F87171;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(96,165,250,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.015) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  body.light{--bg:#F7F7F5;--surface:#FFF;--surface2:#F0F0ED;--border:#E5E5E2;--border2:#D4D4D0;--accent:#1D4ED8;--accent2:#2563EB;--accent-bg:rgba(29,78,216,.06);--accent-border:rgba(29,78,216,.2);--text:#1A1A1A;--text2:#6B7280;--text3:#9CA3AF}
+  body.light::before{background-image:linear-gradient(rgba(29,78,216,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(29,78,216,.015) 1px,transparent 1px)}
+  body.light nav{background:rgba(247,247,245,.92)}
+  body.light .theme-toggle{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px}
+  .nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:15px}
+  .nav-logo .icon{width:30px;height:30px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:8px;transition:all .15s ease}
+  .nav-links a:hover{color:var(--text);background:var(--surface2)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s ease;flex-shrink:0;font-family:inherit}
+  .theme-toggle:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  @media(max-width:600px){.hide-mobile{display:none}}
+
+  .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:start}
+
+  article{min-width:0}
+
+  .article-meta{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+  .meta-tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:99px;background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+  .meta-date{font-size:12px;color:var(--text3);font-family:'IBM Plex Mono',monospace}
+  .meta-read{font-size:12px;color:var(--text3)}
+
+  h1{font-size:36px;font-weight:800;letter-spacing:-1.5px;line-height:1.15;margin-bottom:20px;color:var(--text)}
+  .article-intro{font-size:17px;color:var(--text2);line-height:1.7;margin-bottom:36px;font-family:'Lora',serif;font-style:italic;padding-left:20px;border-left:3px solid var(--accent-border)}
+
+  h2{font-size:22px;font-weight:700;letter-spacing:-.5px;margin:40px 0 14px;color:var(--text)}
+  h3{font-size:17px;font-weight:700;letter-spacing:-.3px;margin:28px 0 10px;color:var(--text)}
+
+  p{font-size:15px;line-height:1.75;color:var(--text2);margin-bottom:16px}
+  p strong{color:var(--text);font-weight:600}
+  p a{color:var(--accent);text-decoration:none;font-weight:600}
+  p a:hover{text-decoration:underline}
+
+  /* PHASE BLOCKS */
+  .phase{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:28px 0}
+  .phase-header{display:flex;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface2)}
+  .phase-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;white-space:nowrap}
+  .phase-title{font-size:16px;font-weight:700;color:var(--text)}
+  .phase-goal{font-size:12px;color:var(--text3);margin-top:2px}
+  .phase-body{padding:20px 24px}
+  .phase-body p{margin-bottom:12px}
+  .phase-body p:last-child{margin-bottom:0}
+
+  .phase-days .phase-badge{background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+  .phase-week2 .phase-badge{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);color:#34D399}
+  .phase-week3 .phase-badge{background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.25);color:#F0B429}
+  .phase-week4 .phase-badge{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);color:#A855F7}
+
+  /* CHECKLIST */
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:12px 0 20px}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text2);line-height:1.5}
+  .checklist li::before{content:'✓';color:var(--success);font-weight:700;flex-shrink:0;margin-top:1px}
+
+  .num-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:12px 0 20px;counter-reset:nlist}
+  .num-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text2);line-height:1.5;counter-increment:nlist}
+  .num-list li::before{content:counter(nlist);width:22px;height:22px;border-radius:50%;background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent);font-size:11px;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:1px;font-family:'IBM Plex Mono',monospace}
+
+  /* CALLOUTS */
+  .callout{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:12px;padding:20px 24px;margin:28px 0}
+  .callout-title{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .callout p{font-size:14px;color:var(--text2);margin-bottom:0;line-height:1.65}
+  .callout p a{color:var(--accent);text-decoration:none;font-weight:600}
+
+  .callout-neutral{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:28px 0}
+  .callout-neutral .callout-title{color:var(--text)}
+  .callout-neutral p{font-size:14px;color:var(--text2);margin-bottom:0;line-height:1.65}
+
+  .callout-success{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:12px;padding:20px 24px;margin:28px 0}
+  .callout-success .callout-title{color:#34D399}
+  .callout-success p{font-size:14px;color:var(--text2);margin-bottom:0;line-height:1.65}
+
+  /* INLINE CTA */
+  .inline-cta{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin:32px 0;display:flex;align-items:center;gap:20px}
+  .inline-cta-text h4{font-size:15px;font-weight:700;margin-bottom:4px}
+  .inline-cta-text p{font-size:13px;color:var(--text2);margin-bottom:0;line-height:1.5}
+  .inline-cta-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;background:var(--accent);color:#FFF;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s ease;white-space:nowrap}
+  .inline-cta-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+
+  /* TOOLS GRID */
+  .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  .tool-link{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;transition:all .15s ease;display:block}
+  .tool-link:hover{border-color:var(--accent-border);background:var(--accent-bg)}
+  .tool-link-emoji{font-size:20px;margin-bottom:8px;display:block}
+  .tool-link-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+  .tool-link-desc{font-size:12px;color:var(--text3);line-height:1.4}
+
+  .divider{height:1px;background:var(--border);margin:40px 0}
+
+  /* SIDEBAR */
+  .sidebar{position:sticky;top:76px;display:flex;flex-direction:column;gap:16px}
+  .toc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .toc-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+  .toc-title i{color:var(--accent);font-size:11px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .toc-list li a{font-size:13px;color:var(--text2);text-decoration:none;padding:5px 8px;border-radius:6px;display:block;transition:all .15s ease;line-height:1.4}
+  .toc-list li a:hover{color:var(--accent);background:var(--accent-bg)}
+
+  .sidebar-cta{background:var(--surface);border:1px solid var(--accent-border);border-radius:14px;padding:20px;text-align:center}
+  .sidebar-cta h4{font-size:15px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+  .sidebar-cta p{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+  .sidebar-cta-btn{display:block;padding:11px 16px;border-radius:10px;background:var(--accent);color:#FFF;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s ease;margin-bottom:8px}
+  .sidebar-cta-btn:hover{background:var(--accent2)}
+  .sidebar-cta-sub{font-size:11px;color:var(--text3)}
+
+  .sidebar-tools{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .sidebar-tools-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+  .st-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:all .15s ease}
+  .st-item:last-child{border-bottom:none;padding-bottom:0}
+  .st-item:hover .st-name{color:var(--accent)}
+  .st-emoji{font-size:16px;flex-shrink:0}
+  .st-name{font-size:12px;font-weight:600;color:var(--text2);transition:color .15s ease}
+
+  .author-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .author-name{font-size:14px;font-weight:700;margin-bottom:4px}
+  .author-bio{font-size:12px;color:var(--text2);line-height:1.5}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-logo{font-size:14px;font-weight:700;color:var(--text2);text-decoration:none;transition:color .15s ease}
+  .footer-logo:hover{color:var(--accent)}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+  .footer-links a{font-size:12px;color:var(--text3);text-decoration:none;transition:color .15s ease}
+  .footer-links a:hover{color:var(--accent)}
+  .footer-copy{font-size:12px;color:var(--text3)}
+
+  @media(max-width:900px){
+    .page{grid-template-columns:1fr}
+    .sidebar{position:static}
+    h1{font-size:28px}
+  }
+  @media(max-width:600px){
+    h1{font-size:24px}
+    h2{font-size:19px}
+    .inline-cta{flex-direction:column;align-items:flex-start}
+    .tools-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="icon">🛠️</span>Fractional Tools</a>
+    <div class="nav-links">
+      <a href="/" class="hide-mobile">Tools</a>
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+<article>
+
+  <div class="article-meta">
+    <span class="meta-tag">Consulting Playbook</span>
+    <span class="meta-tag" style="background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.25);color:#34D399">All Roles</span>
+    <span class="meta-date">March 21, 2026</span>
+    <span class="meta-read">10 min read</span>
+  </div>
+
+  <h1>How to Onboard a New Fractional Client in 30 Days</h1>
+
+  <p class="article-intro">The first 30 days of a fractional engagement set the tone for everything that follows. Done well, they establish trust, demonstrate value, and create the foundation for a long-term relationship. Done poorly, they leave the client wondering why they hired you — and create the conditions for an early exit. This is a complete playbook for getting it right.</p>
+
+  <h2 id="why">Why Onboarding Is the Most Important Month</h2>
+  <p>Most fractional consultants underinvest in onboarding. They sign the contract, show up to the first meeting, and start doing work. That is not onboarding — that is just showing up.</p>
+  <p>Structured onboarding does three things that informal starts cannot:</p>
+  <ol class="num-list">
+    <li><strong>It builds confidence fast.</strong> Clients who see an organized, systematic approach in week one trust you earlier. That trust is what gives you permission to make the bold recommendations that create real value.</li>
+    <li><strong>It surfaces the real problems quickly.</strong> Every company has official problems and real problems. Structured discovery in the first two weeks closes the gap between what the client told you in the sales process and what is actually going on.</li>
+    <li><strong>It creates early wins.</strong> A 30-day onboarding plan forces you to identify and deliver at least one concrete result in the first month. Early wins extend engagements. Engagements without early wins rarely survive to month three.</li>
+  </ol>
+
+  <div class="callout-neutral">
+    <div class="callout-title"><i class="fa-solid fa-lightbulb"></i> The single most important principle</div>
+    <p>Your client hired you because they believe you can solve a problem. The job of the first 30 days is not to prove how much you know — it is to prove that you understand their specific situation deeply enough to know which problem to solve first.</p>
+  </div>
+
+  <h2 id="before">Before Day 1: Pre-Onboarding Checklist</h2>
+  <p>Onboarding does not start on day one — it starts the moment the contract is signed. Before your first official day, complete the following:</p>
+
+  <ul class="checklist">
+    <li>Send a signed copy of the contract and invoice for the first month</li>
+    <li>Request access to relevant systems — CRM, financial software, project management, analytics</li>
+    <li>Send a pre-onboarding questionnaire covering: current priorities, past attempts to solve the problem, key stakeholders, and what success looks like in 90 days</li>
+    <li>Schedule your week 1 discovery sessions — block calendar time with the CEO and any key team members</li>
+    <li>Review any materials they send: pitch decks, financial reports, strategy documents, past audits</li>
+    <li>Research the company, their market, and their top 3 competitors before your first meeting</li>
+    <li>Prepare your onboarding document — the agenda for your first 30 days, shared with the client before day one</li>
+  </ul>
+
+  <p>Sharing your 30-day onboarding plan before you start is one of the highest-impact things you can do. It signals that you are organized, that you have a system, and that the engagement has a clear structure. Most clients have never had a consultant send them a written plan before day one. It stands out immediately.</p>
+
+  <div class="inline-cta">
+    <div class="inline-cta-text">
+      <h4>Diagnose before you prescribe</h4>
+      <p>Use the free audit tools to score your client's marketing, operations, or pipeline before your first meeting — so you walk in with data, not just questions.</p>
+    </div>
+    <a href="/" class="inline-cta-btn"><i class="fa-solid fa-arrow-right"></i> See All Free Tools</a>
+  </div>
+
+  <h2 id="week1">Week 1: Listen, Learn, and Map the Landscape</h2>
+
+  <div class="phase phase-days">
+    <div class="phase-header">
+      <div>
+        <span class="phase-badge">Days 1–5</span>
+        <div class="phase-title">Discovery and stakeholder mapping</div>
+        <div class="phase-goal">Goal: understand the real situation, not the presentation version of it</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p>Week one is about listening, not talking. Your job is to understand the business deeply enough to know where the real problems are — not just the ones the CEO described in the sales call. Those are rarely the same thing.</p>
+      <p>Run a structured discovery session with the CEO or founder. Cover: what is working, what is not working, what has been tried before and why it failed, what the business needs to look like in 12 months, and what would make this engagement an obvious success in their eyes. Take detailed notes. Do not offer solutions yet.</p>
+      <p>Map the key stakeholders — who makes decisions, who influences decisions, and who will be affected by the work you do. In most SMBs there is one person whose buy-in determines whether your recommendations get implemented. Identify that person in week one and build the relationship deliberately.</p>
+      <p>Do a rapid audit of the current state in your area of ownership. A fractional CMO should review the website, active campaigns, content library, and analytics. A fractional CFO should review the last three months of financials, the cash position, and the current financial model. A fractional COO should map the core operational processes and identify the most obvious bottlenecks. Do not wait to be invited — ask for access and start reviewing immediately.</p>
+    </div>
+  </div>
+
+  <h3>The Discovery Questions That Matter Most</h3>
+  <p>Most consultants ask what the client wants. The better question is what they have already tried. Here are the discovery questions that consistently surface the real situation fastest:</p>
+
+  <ol class="num-list">
+    <li>"What have you tried before to solve this problem, and why do you think it didn't work?"</li>
+    <li>"If you could change one thing about how this function operates tomorrow, what would it be?"</li>
+    <li>"What does success look like to you in 90 days? What would make you feel this engagement was worth the investment?"</li>
+    <li>"Who on your team will be most affected by the changes we make, and how do they feel about bringing in outside help?"</li>
+    <li>"What decisions are you currently making without the data you wish you had?"</li>
+    <li>"Is there anything I should know about this business that would take me months to figure out on my own?"</li>
+  </ol>
+
+  <p>That last question is the most valuable one in the list. It creates space for the client to share the things they would not volunteer — internal politics, past failures, difficult team members, or strategic decisions they regret. Act on what you learn with discretion, but always ask.</p>
+
+  <h2 id="week2">Week 2: Diagnose and Prioritize</h2>
+
+  <div class="phase phase-week2">
+    <div class="phase-header">
+      <div>
+        <span class="phase-badge">Days 6–14</span>
+        <div class="phase-title">Structured audit and priority setting</div>
+        <div class="phase-goal">Goal: identify the top 3 problems and rank them by impact and urgency</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p>By the end of week one you have enough information to form a hypothesis about the real problems. Week two is about testing that hypothesis with data and structuring your findings into a clear priority list.</p>
+      <p>Complete a structured audit in your area of ownership. This does not have to be exhaustive — it should be systematic enough to cover the key dimensions and identify the most important gaps. A scoring framework works well here: rate each area from 1 to 4, identify the lowest scores, and map them to business impact.</p>
+      <p>By the end of week two, you should have a written prioritization: the top 3 problems, ranked by impact and urgency, with an initial hypothesis about the root cause of each. Share this with the CEO before moving forward. Alignment on priorities in week two prevents wasted effort in weeks three and four.</p>
+    </div>
+  </div>
+
+  <p>This is exactly where the free audit tools become useful. Rather than building your own scoring framework from scratch for every new client, use a structured tool that covers the key dimensions of your area systematically:</p>
+
+  <div class="tools-grid">
+    <a href="/marketing-audit-score" class="tool-link">
+      <span class="tool-link-emoji">📣</span>
+      <div class="tool-link-name">Marketing Audit Score</div>
+      <div class="tool-link-desc">12 questions across strategy, content, channels, and analytics. Instant score with priority fixes.</div>
+    </a>
+    <a href="/pipeline-health-score" class="tool-link">
+      <span class="tool-link-emoji">📊</span>
+      <div class="tool-link-name">Sales Pipeline Health Score</div>
+      <div class="tool-link-desc">10 questions covering pipeline volume, quality, CRM, and forecasting accuracy.</div>
+    </a>
+    <a href="/operations-efficiency-score" class="tool-link">
+      <span class="tool-link-emoji">⚙️</span>
+      <div class="tool-link-name">Operations Efficiency Score</div>
+      <div class="tool-link-desc">12 questions across processes, people, technology, and scale readiness.</div>
+    </a>
+    <a href="/cash-runway-calculator" class="tool-link">
+      <span class="tool-link-emoji">💵</span>
+      <div class="tool-link-name">Cash Runway Calculator</div>
+      <div class="tool-link-desc">Instant runway analysis with break-even date and four planning scenarios.</div>
+    </a>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title"><i class="fa-solid fa-star"></i> Use the audit tools in your first client meeting</div>
+    <p>Walking into a first meeting with a scored audit of your client's situation — completed before you even started — is one of the fastest ways to demonstrate competence and earn trust. It shows you did the work before you were paid to do it. That signals something important about how you operate.</p>
+  </div>
+
+  <h2 id="week3">Week 3: Deliver the First Win</h2>
+
+  <div class="phase phase-week3">
+    <div class="phase-header">
+      <div>
+        <span class="phase-badge">Days 15–21</span>
+        <div class="phase-title">First concrete deliverable</div>
+        <div class="phase-goal">Goal: produce one meaningful output that demonstrates value before the end of month one</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p>By week three you know the priorities. Now you need to deliver something concrete. Not a strategy document — a result, or at minimum a high-quality deliverable that a client can use immediately.</p>
+      <p>The first win does not have to be large. It has to be visible. A fractional CFO who delivers a clean cash flow forecast and a clear runway analysis in week three has demonstrated more value than one who spends three weeks in meetings. A fractional CMO who identifies three leaking conversion points on the website and writes new copy for the homepage CTA has shown immediate impact.</p>
+      <p>Choose your first deliverable based on two criteria: it should address a problem the client mentioned in discovery, and it should be completable within the week. Scope it conservatively. An excellent, focused deliverable builds more trust than an ambitious one that arrives late or incomplete.</p>
+    </div>
+  </div>
+
+  <h3>Role-Specific First Win Examples</h3>
+  <p>Here are concrete examples of high-impact first deliverables by role, based on what creates the most immediate trust:</p>
+
+  <p><strong>Fractional CMO:</strong> A marketing health scorecard with 5 specific recommendations ranked by impact, or a rewritten homepage headline and value proposition tested against the current version.</p>
+  <p><strong>Fractional CFO:</strong> A 12-month cash flow forecast with three scenarios (base, downside, upside), or a one-page financial dashboard showing the 6 metrics the CEO should be reviewing weekly.</p>
+  <p><strong>Fractional COO:</strong> A process map of the top 3 operational bottlenecks with a prioritized fix plan, or a RACI matrix clarifying ownership across the leadership team.</p>
+  <p><strong>Fractional CTO:</strong> A tech stack audit with a redundancy analysis and estimated annual savings from consolidation, or a security and infrastructure risk assessment with a priority fix list.</p>
+  <p><strong>B2B Sales Consultant:</strong> A pipeline health score with specific recommendations on the top 5 deals currently at risk, or a rewritten discovery call script tested against the current approach.</p>
+
+  <h2 id="week4">Week 4: Build the 90-Day Plan</h2>
+
+  <div class="phase phase-week4">
+    <div class="phase-header">
+      <div>
+        <span class="phase-badge">Days 22–30</span>
+        <div class="phase-title">90-day roadmap and operating rhythm</div>
+        <div class="phase-goal">Goal: align on priorities for months 2 and 3 and establish a clear working rhythm</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p>The last week of month one is about structure. By now you have completed your audit, set priorities, and delivered your first win. The client's confidence in you is at its highest point since the contract was signed. Use that moment to get alignment on the next 90 days.</p>
+      <p>Present a written 90-day plan that covers: the 3 strategic priorities you will work on, the key deliverables and milestones for each, how you will measure progress, and how the two of you will work together on an ongoing basis — meetings, communication channels, and decision-making protocols.</p>
+      <p>The 90-day plan is also where you establish the operating rhythm that will govern the rest of the engagement. Define your weekly check-in format, monthly review structure, and how you will handle urgent questions outside scheduled meetings. Engagements without a defined rhythm become reactive. Reactive engagements get de-prioritized and eventually cancelled.</p>
+    </div>
+  </div>
+
+  <h3>The 30-Day Review Meeting</h3>
+  <p>At the end of month one, run a structured 30-day review with the CEO or main stakeholder. Cover three things: what you found, what you have already done about it, and what the plan is for the next 90 days. This meeting accomplishes something critical — it makes the value of the first month explicit. Clients who can articulate the value they have received are far more likely to extend and expand engagements.</p>
+  <p>Ask directly: "On a scale of 1 to 10, how valuable has the first month been?" If the answer is below 8, ask what would make it a 10. Do not wait until month three to surface dissatisfaction.</p>
+
+  <div class="callout-success">
+    <div class="callout-title"><i class="fa-solid fa-check-circle"></i> The 30-day onboarding output checklist</div>
+    <p>By the end of day 30, you should have produced: a completed audit of your area of ownership, a written priority list aligned with the CEO, at least one concrete deliverable, a 90-day plan, and an established operating rhythm. If all five exist, the engagement has a strong foundation.</p>
+  </div>
+
+  <h2 id="mistakes">The 5 Most Common Onboarding Mistakes</h2>
+  <p>After observing dozens of fractional engagements, these are the mistakes that consistently damage or end engagements in the first 60 days:</p>
+
+  <h3>1. Starting with recommendations before completing discovery</h3>
+  <p>Experienced consultants know what solutions usually work. That knowledge becomes a liability when it causes you to skip discovery and jump straight to recommendations. Every company is different. The solution that worked for your last client may be wrong for this one. Commit to understanding before advising, even when you are confident you already know the answer.</p>
+
+  <h3>2. Trying to fix everything at once</h3>
+  <p>New fractional consultants often arrive with energy and try to address every problem they see in the first month. This creates noise, dilutes impact, and overwhelms the client. Identify the top three priorities and go deep on those. Breadth impresses nobody. Depth and results build relationships.</p>
+
+  <h3>3. Underestimating internal politics</h3>
+  <p>Every organization has internal dynamics that are invisible from the outside. A recommendation that makes perfect strategic sense can be dead on arrival if it threatens the wrong person's territory. Map the political landscape in week one. Understand who supports change and who resists it. Build coalitions deliberately.</p>
+
+  <h3>4. Not establishing communication boundaries</h3>
+  <p>Without explicit agreements about availability and communication, fractional engagements can become full-time jobs. Define in week one: how you prefer to communicate, what response time to expect for different types of messages, and what constitutes an emergency versus a normal question. Protect your capacity — it is what allows you to serve multiple clients well.</p>
+
+  <h3>5. Failing to make the value visible</h3>
+  <p>The most common reason fractional engagements end early is not that the consultant did bad work — it is that the client could not see the value clearly. Track what you do, document decisions you influenced, and quantify outcomes wherever possible. At the 30-day review, show the client a concrete record of what you delivered. Value that is not visible is value that does not get renewed.</p>
+
+  <div class="divider"></div>
+
+  <h2 id="summary">Summary: The 30-Day Onboarding Framework</h2>
+  <p>A well-structured first month follows a consistent pattern regardless of your role or the client's industry:</p>
+  <ol class="num-list">
+    <li><strong>Before day 1:</strong> Share a written onboarding plan, request system access, and complete pre-onboarding research</li>
+    <li><strong>Week 1:</strong> Run structured discovery, map stakeholders, and complete a rapid audit of the current state</li>
+    <li><strong>Week 2:</strong> Use a scoring framework to diagnose and prioritize the top 3 problems</li>
+    <li><strong>Week 3:</strong> Deliver one concrete, visible result that addresses a priority identified in discovery</li>
+    <li><strong>Week 4:</strong> Present a 90-day plan, establish the operating rhythm, and run the 30-day review</li>
+  </ol>
+  <p>The fractional consultants who build long-term, high-value practices are not necessarily the most technically skilled. They are the ones who make clients feel understood, deliver results early, and create a working relationship that the client does not want to lose. The first 30 days is where that relationship is built — or isn't.</p>
+
+  <div class="callout">
+    <div class="callout-title"><i class="fa-solid fa-toolbox"></i> Free tools to use in your onboarding process</div>
+    <p>Use the <a href="/marketing-audit-score">Marketing Audit Score</a>, <a href="/pipeline-health-score">Sales Pipeline Health Score</a>, and <a href="/operations-efficiency-score">Operations Efficiency Score</a> to complete a structured diagnostic in your first two weeks. Use the <a href="/cash-runway-calculator">Cash Runway Calculator</a> to give any client an instant financial health snapshot. All free, no signup.</p>
+  </div>
+
+</article>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="toc-card">
+    <div class="toc-title"><i class="fa-solid fa-list"></i> In this article</div>
+    <ul class="toc-list">
+      <li><a href="#why">Why onboarding matters most</a></li>
+      <li><a href="#before">Before day 1</a></li>
+      <li><a href="#week1">Week 1 — Discovery</a></li>
+      <li><a href="#week2">Week 2 — Diagnose</a></li>
+      <li><a href="#week3">Week 3 — First win</a></li>
+      <li><a href="#week4">Week 4 — 90-day plan</a></li>
+      <li><a href="#mistakes">5 common mistakes</a></li>
+      <li><a href="#summary">Summary</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar-cta">
+    <h4>Audit tools for onboarding</h4>
+    <p>Score your client's marketing, pipeline, or operations in 3 minutes. Free, instant, no signup.</p>
+    <a href="/" class="sidebar-cta-btn">See All Free Tools →</a>
+    <span class="sidebar-cta-sub">Free · No signup · Instant results</span>
+  </div>
+
+  <div class="sidebar-tools">
+    <div class="sidebar-tools-title">Free Tools</div>
+    <a href="/marketing-audit-score" class="st-item"><span class="st-emoji">📣</span><span class="st-name">Marketing Audit Score</span></a>
+    <a href="/pipeline-health-score" class="st-item"><span class="st-emoji">📊</span><span class="st-name">Sales Pipeline Health Score</span></a>
+    <a href="/operations-efficiency-score" class="st-item"><span class="st-emoji">⚙️</span><span class="st-name">Operations Efficiency Score</span></a>
+    <a href="/cash-runway-calculator" class="st-item"><span class="st-emoji">💵</span><span class="st-name">Cash Runway Calculator</span></a>
+    <a href="/rate-calculator" class="st-item"><span class="st-emoji">🧮</span><span class="st-name">Rate Calculator</span></a>
+    <a href="/tech-stack-calculator" class="st-item"><span class="st-emoji">🖥️</span><span class="st-name">Tech Stack Calculator</span></a>
+  </div>
+
+  <div class="author-card">
+    <div class="author-name">Mohamed.B</div>
+    <div class="author-bio">Building fractional consulting tools at fractionaltools.com. Writing about rates, systems, and the business of independent consulting.</div>
+  </div>
+
+</aside>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const body=document.body, btn=document.getElementById('theme-btn');
+    body.classList.contains('light')
+      ? (body.classList.remove('light'),btn.textContent='🌙',localStorage.setItem('ft-theme','dark'))
+      : (body.classList.add('light'),btn.textContent='☀️',localStorage.setItem('ft-theme','light'));
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('ft-theme')==='light') {
+      document.body.classList.add('light');
+      const b=document.getElementById('theme-btn');
+      if(b) b.textContent='☀️';
+    }
+  });
+</script>
+</body>
+</html>
