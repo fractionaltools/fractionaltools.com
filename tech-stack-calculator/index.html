@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free tech stack cost calculator. Add your software tools, see total monthly spend, cost per employee, and category breakdown instantly.">
+<title>Tech Stack Cost Calculator — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#080C10;--surface:#0E1318;--surface2:#141A21;
+    --border:#1E2730;--border2:#263040;
+    --accent:#818CF8;--accent2:#A5B4FC;
+    --accent-bg:rgba(129,140,248,0.07);--accent-border:rgba(129,140,248,0.25);
+    --text:#E8EEF5;--text2:#8A99A8;--text3:#4A5568;
+    --success:#34D399;--warning:#F0B429;--danger:#F87171;
+    --input-bg:#060A0E;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(129,140,248,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(129,140,248,.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  body.light{--bg:#F7F7F5;--surface:#FFF;--surface2:#F0F0ED;--border:#E5E5E2;--border2:#D4D4D0;--accent:#4F46E5;--accent2:#6366F1;--accent-bg:rgba(79,70,229,.06);--accent-border:rgba(79,70,229,.2);--text:#1A1A1A;--text2:#6B7280;--text3:#9CA3AF;--success:#059669;--danger:#DC2626;--input-bg:#F0F0ED}
+  body.light::before{background-image:linear-gradient(rgba(79,70,229,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(79,70,229,.025) 1px,transparent 1px)}
+  body.light nav{background:rgba(247,247,245,.92)}
+  body.light .theme-toggle{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px}
+  .nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:15px}
+  .nav-logo .icon{width:30px;height:30px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .nav-title{font-size:14px;font-weight:600;color:var(--text2);position:absolute;left:50%;transform:translateX(-50%)}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:8px;transition:all .15s ease}
+  .nav-links a:hover{color:var(--text);background:var(--surface2)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s ease;flex-shrink:0;font-family:inherit}
+  .theme-toggle:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  @media(max-width:600px){.nav-title{display:none}.hide-mobile{display:none}}
+
+  /* PAGE */
+  .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:28px 24px 80px}
+
+  /* TWO COLUMN */
+  .two-col{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;margin-bottom:20px}
+
+  /* CARDS */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+  .card-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+  .card-title i{color:var(--accent);font-size:11px}
+
+  /* TEAM ROW */
+  .team-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+  .team-label{font-size:13px;font-weight:500;color:var(--text2);white-space:nowrap}
+  .team-input{width:90px;height:40px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;padding:0 12px;outline:none;transition:border-color .15s ease;-moz-appearance:textfield}
+  .team-input::-webkit-outer-spin-button,.team-input::-webkit-inner-spin-button{-webkit-appearance:none}
+  .team-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  .team-hint{font-size:11px;color:var(--text3)}
+
+  /* TOOLS TABLE */
+  .col-heads{display:grid;grid-template-columns:1fr 110px 110px 36px;gap:8px;padding:0 16px;margin-bottom:6px}
+  .col-head{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+  .col-head.right{text-align:right}
+
+  .tools-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+
+  .tool-row{display:grid;grid-template-columns:1fr 110px 110px 36px;gap:8px;align-items:center;padding:11px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;transition:border-color .15s ease}
+  .tool-row:hover{border-color:var(--border2)}
+
+  .t-name{background:transparent;border:none;outline:none;color:var(--text);font-family:'Sora',sans-serif;font-size:13px;font-weight:500;width:100%;min-width:0}
+  .t-name::placeholder{color:var(--text3)}
+
+  .t-cost{background:transparent;border:none;outline:none;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;width:100%;text-align:right;-moz-appearance:textfield}
+  .t-cost::-webkit-outer-spin-button,.t-cost::-webkit-inner-spin-button{-webkit-appearance:none}
+  .t-cost::placeholder{color:var(--text3);text-align:right}
+
+  .t-billing{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Sora',sans-serif;font-size:12px;padding:5px 8px;outline:none;cursor:pointer;width:100%}
+  .t-billing:focus{border-color:var(--accent)}
+
+  .btn-rm{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;display:grid;place-items:center;font-size:12px;transition:all .15s ease;font-family:inherit}
+  .btn-rm:hover{border-color:rgba(248,113,113,.4);color:#F87171;background:rgba(248,113,113,.08)}
+
+  .btn-add{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px dashed var(--border2);background:transparent;color:var(--text3);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s ease;width:100%;font-family:'Sora',sans-serif}
+  .btn-add:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+  .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
+  .ldot{width:7px;height:7px;border-radius:50%}
+
+  /* RESULTS */
+  .results-col{display:flex;flex-direction:column;gap:16px}
+
+  .total-card{background:var(--surface);border:1px solid var(--accent-border);border-radius:16px;overflow:hidden}
+  .total-head{background:var(--accent-bg);padding:14px 20px;border-bottom:1px solid var(--accent-border)}
+  .total-head .card-title{margin-bottom:0;color:var(--accent)}
+  .total-body{padding:20px}
+  .total-center{text-align:center;padding:12px 0 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+  .total-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+  .total-num{font-family:'IBM Plex Mono',monospace;font-size:44px;font-weight:600;color:var(--accent);letter-spacing:-2px;line-height:1;transition:all .3s ease}
+  .total-yr{font-size:12px;color:var(--text2);margin-top:4px}
+
+  .mrows{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+  .mrow{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)}
+  .mrow-lbl{font-size:12px;color:var(--text2)}
+  .mrow-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--text);transition:all .3s ease}
+
+  .w-alert{padding:11px 13px;border-radius:9px;font-size:12px;font-weight:500;line-height:1.5;display:none}
+
+  .bdown-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .bdown-head{padding:14px 20px;border-bottom:1px solid var(--border)}
+  .bdown-body{padding:8px 0}
+  .brow{display:flex;align-items:center;gap:10px;padding:8px 20px;transition:background .15s ease}
+  .brow:hover{background:var(--surface2)}
+  .bdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .bname{font-size:12px;color:var(--text2);flex:1}
+  .bbar-wrap{width:50px;height:4px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .bbar{height:100%;border-radius:99px;transition:width .4s ease}
+  .bamt{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--text)}
+  .bpct{font-size:10px;color:var(--text3);margin-left:3px}
+
+  .tips-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .tips-head{padding:14px 20px;border-bottom:1px solid var(--border)}
+  .tip{display:flex;align-items:flex-start;gap:10px;padding:11px 20px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text2);line-height:1.5}
+  .tip:last-child{border-bottom:none}
+  .tip-i{flex-shrink:0;margin-top:1px}
+
+  /* HOW TO */
+  .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .how-step{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .how-n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600;margin-bottom:6px}
+  .how-t{font-size:13px;font-weight:700;margin-bottom:4px}
+  .how-d{font-size:12px;color:var(--text2);line-height:1.5}
+
+  /* CTA */
+  .cta-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 32px;text-align:center}
+  .cta-div{display:flex;align-items:center;gap:16px;margin:24px 0}
+  .cta-div::before,.cta-div::after{content:'';flex:1;height:1px;background:var(--border)}
+  .cta-div span{font-size:12px;color:var(--text3)}
+  .kblock,.pblock{max-width:440px;margin:0 auto}
+  .kblock h3,.pblock h3{font-size:19px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+  .kblock p,.pblock p{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.6}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s ease;border:none;font-family:'Sora',sans-serif}
+  .btn:active{transform:scale(.98)}
+  .btn-ol{border:1px solid var(--border2);color:var(--text2);background:transparent}
+  .btn-ol:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .btn-pr{background:var(--accent);color:#FFF}
+  .btn-pr:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(129,140,248,.3)}
+  .pfeats{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;text-align:left;max-width:300px;margin-left:auto;margin-right:auto}
+  .pfeat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+  .pfeat i{color:var(--success);font-size:11px}
+  .btn-sub{display:block;font-size:11px;color:var(--text3);margin-top:8px}
+
+  /* FOOTER */
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-logo{font-size:14px;font-weight:700;color:var(--text2);text-decoration:none;transition:color .15s ease}
+  .footer-logo:hover{color:var(--accent)}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+  .footer-links a{font-size:12px;color:var(--text3);text-decoration:none;transition:color .15s ease}
+  .footer-links a:hover{color:var(--accent)}
+  .footer-copy{font-size:12px;color:var(--text3)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .tool-row{animation:fadeUp .2s ease both}
+
+  @media(max-width:900px){
+    .two-col{grid-template-columns:1fr}
+    .col-heads,.tool-row{grid-template-columns:1fr 100px 90px 32px}
+  }
+  @media(max-width:560px){
+    .col-heads,.tool-row{grid-template-columns:1fr 90px 32px}
+    .t-billing,.col-head.billing-h{display:none}
+    .how-grid{grid-template-columns:1fr}
+    .cta-card{padding:28px 16px}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="icon">🛠️</span>Fractional Tools</a>
+    <div class="nav-title">Tech Stack Cost Calculator</div>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="two-col">
+
+    <!-- LEFT -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Tool input card -->
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-layer-group"></i> Your Tech Stack</div>
+
+        <div class="team-row">
+          <span class="team-label">Team size</span>
+          <input type="number" class="team-input" id="team-size" value="10" min="1" oninput="calc()">
+          <span class="team-hint">people — used to calculate cost per employee</span>
+        </div>
+
+        <div class="col-heads">
+          <span class="col-head">Tool Name</span>
+          <span class="col-head right">Cost / mo</span>
+          <span class="col-head billing-h">Billing</span>
+          <span></span>
+        </div>
+
+        <div class="tools-list" id="tools-list"></div>
+
+        <button class="btn-add" onclick="addTool()">
+          <i class="fa-solid fa-plus"></i> Add a tool
+        </button>
+
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <!-- How to -->
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-circle-info"></i> How to use this calculator</div>
+        <div class="how-grid">
+          <div class="how-step">
+            <div class="how-n">01 —</div>
+            <div class="how-t">Set your team size</div>
+            <div class="how-d">Enter the number of people to calculate cost per employee — the most important benchmark.</div>
+          </div>
+          <div class="how-step">
+            <div class="how-n">02 —</div>
+            <div class="how-t">Add every tool</div>
+            <div class="how-d">List all software subscriptions. Use "Per user" billing for seat-based tools like Slack or Zoom.</div>
+          </div>
+          <div class="how-step">
+            <div class="how-n">03 —</div>
+            <div class="how-t">Read the benchmark</div>
+            <div class="how-d">The waste alert tells you if spend per employee is healthy, watch-worthy, or in the danger zone.</div>
+          </div>
+          <div class="how-step">
+            <div class="how-n">04 —</div>
+            <div class="how-t">Find the waste</div>
+            <div class="how-d">Check the category breakdown. Any category with disproportionate spend is the first place to audit.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-card">
+        <div class="kblock">
+          <h3>☕ Found this useful?</h3>
+          <p>This calculator is completely free. If it helped you audit your client's tech spend, a coffee keeps the tools coming.</p>
+          <a href="https://ko-fi.com/fractionaltools" class="btn btn-ol"><i class="fa-solid fa-mug-hot"></i> Buy me a coffee</a>
+        </div>
+        <div class="cta-div"><span>or go deeper</span></div>
+        <div class="pblock">
+          <h3>Want the complete CTO system?</h3>
+          <p>This calculator shows the cost. The full Fractional CTO Toolkit gives you the frameworks to optimize it — tech audits, vendor negotiations, and a complete technology roadmap.</p>
+          <div class="pfeats">
+            <div class="pfeat"><i class="fa-solid fa-check"></i> Tech Health Audit — 56 questions, 8 categories</div>
+            <div class="pfeat"><i class="fa-solid fa-check"></i> Monthly Tech Dashboard + CTO Pricing Calculator</div>
+            <div class="pfeat"><i class="fa-solid fa-check"></i> 30-60-90 Day CTO Onboarding Plan + Discovery Playbook</div>
+          </div>
+          <a href="https://fractionaltools.gumroad.com/l/fractional-cto-toolkit" class="btn btn-pr">Get the CTO Toolkit →</a>
+          <span class="btn-sub">One-time purchase · Instant access · 7-day money-back guarantee</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: sticky results -->
+    <div class="results-col" style="position:sticky;top:76px">
+
+      <div class="total-card">
+        <div class="total-head">
+          <div class="card-title"><i class="fa-solid fa-calculator"></i> Total Cost</div>
+        </div>
+        <div class="total-body">
+          <div class="total-center">
+            <div class="total-lbl">Monthly Software Spend</div>
+            <div class="total-num" id="t-mo">$0</div>
+            <div class="total-yr" id="t-yr">$0 / year</div>
+          </div>
+          <div class="mrows">
+            <div class="mrow"><span class="mrow-lbl">Cost per employee / mo</span><span class="mrow-val" id="t-emp">$0</span></div>
+            <div class="mrow"><span class="mrow-lbl">Tools in stack</span><span class="mrow-val" id="t-count">0</span></div>
+            <div class="mrow"><span class="mrow-lbl">Avg cost per tool</span><span class="mrow-val" id="t-avg">$0</span></div>
+          </div>
+          <div class="w-alert" id="w-alert"></div>
+        </div>
+      </div>
+
+      <div class="bdown-card">
+        <div class="bdown-head">
+          <div class="card-title" style="margin-bottom:0"><i class="fa-solid fa-chart-pie"></i> By Category</div>
+        </div>
+        <div class="bdown-body" id="bdown">
+          <div style="padding:14px 20px;font-size:13px;color:var(--text3)">Add tools to see breakdown</div>
+        </div>
+      </div>
+
+      <div class="tips-card">
+        <div class="tips-head">
+          <div class="card-title" style="margin-bottom:0"><i class="fa-solid fa-lightbulb"></i> Benchmarks</div>
+        </div>
+        <div class="tip"><span class="tip-i">💡</span>Healthy B2B companies spend $200–$400 per employee per year on software.</div>
+        <div class="tip"><span class="tip-i">⚠️</span>Above $600/employee/year warrants a full audit — look for overlap and underused tools.</div>
+        <div class="tip"><span class="tip-i">🔁</span>Two tools doing the same job = one should be cut. Common overlaps: project management, CRM, communication.</div>
+        <div class="tip"><span class="tip-i">📋</span>Ask each tool owner: "Is this essential?" If they hesitate, it's probably not.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  const CATS = [
+    {id:'crm',       label:'CRM & Sales',      color:'#818CF8'},
+    {id:'marketing', label:'Marketing',         color:'#F472B6'},
+    {id:'ops',       label:'Operations',        color:'#34D399'},
+    {id:'dev',       label:'Development',       color:'#60A5FA'},
+    {id:'finance',   label:'Finance',           color:'#F0B429'},
+    {id:'comms',     label:'Communication',     color:'#FB923C'},
+    {id:'hr',        label:'HR & People',       color:'#A78BFA'},
+    {id:'analytics', label:'Analytics',         color:'#2DD4BF'},
+    {id:'security',  label:'Security',          color:'#F87171'},
+    {id:'other',     label:'Other',             color:'#64748B'},
+  ];
+  const catMap = Object.fromEntries(CATS.map(c=>[c.id,c]));
+
+  let tools = [
+    {id:0, name:'Slack',            cost:87.50, billing:'monthly', cat:'comms'},
+    {id:1, name:'HubSpot',          cost:450,   billing:'monthly', cat:'crm'},
+    {id:2, name:'Notion',           cost:80,    billing:'monthly', cat:'ops'},
+    {id:3, name:'Google Workspace', cost:120,   billing:'monthly', cat:'comms'},
+    {id:4, name:'Zoom',             cost:149,   billing:'monthly', cat:'comms'},
+  ];
+  let nid = 5;
+
+  const fmtK = n => n >= 10000 ? '$'+(n/1000).toFixed(1)+'K' : '$'+Math.round(n).toLocaleString();
+
+  function render() {
+    const list = document.getElementById('tools-list');
+    list.innerHTML = '';
+    tools.forEach(t => {
+      const catOpts = CATS.map(c=>`<option value="${c.id}"${t.cat===c.id?' selected':''}>${c.label}</option>`).join('');
+      const row = document.createElement('div');
+      row.className = 'tool-row';
+      row.innerHTML = `
+        <input class="t-name" type="text" placeholder="Tool name" value="${t.name}" oninput="upd(${t.id},'name',this.value)">
+        <input class="t-cost" type="number" placeholder="0" min="0" step="0.01" value="${t.cost||''}" oninput="upd(${t.id},'cost',this.value)">
+        <select class="t-billing" onchange="upd(${t.id},'billing',this.value)">
+          <option value="monthly"${t.billing==='monthly'?' selected':''}>Monthly</option>
+          <option value="annual"${t.billing==='annual'?' selected':''}>Annual ÷12</option>
+          <option value="per_user"${t.billing==='per_user'?' selected':''}>Per user</option>
+        </select>
+        <button class="btn-rm" onclick="rmTool(${t.id})"><i class="fa-solid fa-xmark"></i></button>`;
+      list.appendChild(row);
+    });
+
+    // legend
+    const used = [...new Set(tools.map(t=>t.cat))];
+    document.getElementById('legend').innerHTML = used.map(id=>{
+      const c = catMap[id];
+      return `<div class="legend-item"><div class="ldot" style="background:${c.color}"></div>${c.label}</div>`;
+    }).join('');
+
+    calc();
+  }
+
+  function addTool() {
+    tools.push({id:nid++, name:'', cost:0, billing:'monthly', cat:'other'});
+    render();
+    const inputs = document.querySelectorAll('.t-name');
+    inputs[inputs.length-1]?.focus();
+  }
+
+  function rmTool(id) { tools = tools.filter(t=>t.id!==id); render(); }
+
+  function upd(id, field, val) {
+    const t = tools.find(t=>t.id===id);
+    if (!t) return;
+    t[field] = field==='cost' ? parseFloat(val)||0 : val;
+    calc();
+  }
+
+  function calc() {
+    const team = parseInt(document.getElementById('team-size').value)||1;
+    let total = 0;
+    const catTotals = {};
+
+    tools.forEach(t => {
+      let mo = t.cost||0;
+      if (t.billing==='per_user') mo = mo * team;
+      total += mo;
+      catTotals[t.cat] = (catTotals[t.cat]||0) + mo;
+    });
+
+    const yr = total * 12;
+    const perEmp = total / team;
+    const perEmpYr = perEmp * 12;
+    const avg = tools.length ? total / tools.length : 0;
+
+    document.getElementById('t-mo').textContent    = fmtK(total);
+    document.getElementById('t-yr').textContent    = fmtK(yr) + ' / year';
+    document.getElementById('t-emp').textContent   = fmtK(perEmp) + '/mo';
+    document.getElementById('t-count').textContent = tools.length;
+    document.getElementById('t-avg').textContent   = fmtK(avg);
+
+    // Waste alert
+    const wa = document.getElementById('w-alert');
+    if (!tools.length) { wa.style.display='none'; }
+    else if (perEmpYr > 600) {
+      wa.innerHTML = `🔴 <strong>High spend:</strong> $${Math.round(perEmpYr)}/employee/year exceeds the $600 benchmark. A tech audit is recommended.`;
+      wa.style.cssText = 'padding:11px 13px;border-radius:9px;font-size:12px;font-weight:500;line-height:1.5;display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);color:#F87171';
+    } else if (perEmpYr > 400) {
+      wa.innerHTML = `🟡 <strong>Watch closely:</strong> $${Math.round(perEmpYr)}/employee/year is above average. Review for unused tools.`;
+      wa.style.cssText = 'padding:11px 13px;border-radius:9px;font-size:12px;font-weight:500;line-height:1.5;display:block;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.25);color:#F0B429';
+    } else {
+      wa.innerHTML = `🟢 <strong>Healthy spend:</strong> $${Math.round(perEmpYr)}/employee/year is within the $200–$400 benchmark.`;
+      wa.style.cssText = 'padding:11px 13px;border-radius:9px;font-size:12px;font-weight:500;line-height:1.5;display:block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);color:#34D399';
+    }
+
+    // Category breakdown
+    const bd = document.getElementById('bdown');
+    const entries = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]);
+    if (!entries.length) {
+      bd.innerHTML = '<div style="padding:14px 20px;font-size:13px;color:var(--text3)">Add tools to see breakdown</div>';
+    } else {
+      const max = entries[0][1];
+      bd.innerHTML = entries.map(([id, amt]) => {
+        const c = catMap[id]||catMap['other'];
+        const pct = max > 0 ? (amt/max)*100 : 0;
+        const share = total > 0 ? Math.round((amt/total)*100) : 0;
+        return `<div class="brow">
+          <div class="bdot" style="background:${c.color}"></div>
+          <div class="bname">${c.label}</div>
+          <div class="bbar-wrap"><div class="bbar" style="width:${pct}%;background:${c.color}"></div></div>
+          <div class="bamt">${fmtK(amt)}<span class="bpct">${share}%</span></div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  function toggleTheme() {
+    const body=document.body, btn=document.getElementById('theme-btn');
+    body.classList.contains('light')
+      ? (body.classList.remove('light'),btn.textContent='🌙',localStorage.setItem('ft-theme','dark'))
+      : (body.classList.add('light'),btn.textContent='☀️',localStorage.setItem('ft-theme','light'));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('ft-theme')==='light') {
+      document.body.classList.add('light');
+      const b=document.getElementById('theme-btn');
+      if(b) b.textContent='☀️';
+    }
+    render();
+  });
+</script>
+</body>
+</html>

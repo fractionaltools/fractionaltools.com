@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free operations efficiency score for fractional COOs and operations consultants. Score your client's operations across 6 categories and get an instant diagnosis with priority fixes.">
+<meta property="og:title" content="Operations Efficiency Score — Fractional Tools">
+<meta property="og:description" content="Diagnose your client's operations in 3 minutes. Free, instant, no signup.">
+<title>Operations Efficiency Score — Fractional Tools</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#080C10;--surface:#0E1318;--surface2:#141A21;
+    --border:#1E2730;--border2:#263040;
+    --accent:#2E7D32;--accent:#34D399;--accent2:#6EE7B7;
+    --accent-bg:rgba(52,211,153,0.07);--accent-border:rgba(52,211,153,0.25);
+    --text:#E8EEF5;--text2:#8A99A8;--text3:#4A5568;
+    --success:#34D399;--warning:#F0B429;--danger:#F87171;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(52,211,153,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(52,211,153,.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  body.light{--bg:#F7F7F5;--surface:#FFF;--surface2:#F0F0ED;--border:#E5E5E2;--border2:#D4D4D0;--accent:#059669;--accent2:#10B981;--accent-bg:rgba(5,150,105,.06);--accent-border:rgba(5,150,105,.2);--text:#1A1A1A;--text2:#6B7280;--text3:#9CA3AF;--success:#059669;--danger:#DC2626}
+  body.light::before{background-image:linear-gradient(rgba(5,150,105,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(5,150,105,.025) 1px,transparent 1px)}
+  body.light nav{background:rgba(247,247,245,.92)}
+  body.light .theme-toggle{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px}
+  .nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:15px}
+  .nav-logo .icon{width:30px;height:30px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .nav-title{font-size:14px;font-weight:600;color:var(--text2);position:absolute;left:50%;transform:translateX(-50%)}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:8px;transition:all .15s ease}
+  .nav-links a:hover{color:var(--text);background:var(--surface2)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s ease;flex-shrink:0;font-family:inherit}
+  .theme-toggle:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  @media(max-width:600px){.nav-title{display:none}.hide-mobile{display:none}}
+
+  .main{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+  .intro-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px}
+  .intro-icon{width:44px;height:44px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-border);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+  .intro-title{font-size:15px;font-weight:700;margin-bottom:5px}
+  .intro-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+  .cat-track{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:8px;overflow-x:auto}
+  .cat-pill{font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;border:1px solid var(--border);color:var(--text3);white-space:nowrap;transition:all .2s ease;flex-shrink:0}
+  .cat-pill.active{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .cat-pill.done{border-color:rgba(52,211,153,.3);color:#34D399;background:rgba(52,211,153,.08)}
+  .cat-divider{width:16px;height:1px;background:var(--border);flex-shrink:0}
+
+  .progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+  .progress-label{font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}
+  .progress-track{flex:1;height:5px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+  .progress-count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+
+  .question-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;display:none;animation:fadeUp .3s ease both}
+  .question-card.active{display:block}
+  .q-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .q-cat-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+  .q-number{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3)}
+  .q-text{font-size:17px;font-weight:700;letter-spacing:-.4px;line-height:1.4;margin-bottom:8px}
+  .q-context{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:22px;padding:12px 16px;background:var(--surface2);border-radius:8px;border-left:2px solid var(--accent-border)}
+
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:13px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s ease;font-size:13px;font-weight:500;color:var(--text2);line-height:1.4}
+  .option:hover{border-color:var(--accent-border);color:var(--text);background:var(--accent-bg)}
+  .option.selected{border-color:var(--accent);background:var(--accent-bg);color:var(--text)}
+  .option-score{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;background:var(--border2);color:var(--text3);transition:all .15s ease;margin-top:1px}
+  .option.selected .option-score{background:var(--accent);color:#080C10}
+
+  .q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+  .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s ease;font-family:'Sora',sans-serif;border:none}
+  .btn-back{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+  .btn-back:hover{border-color:var(--border2);color:var(--text)}
+  .btn-next{background:var(--accent);color:#080C10}
+  .btn-next:hover{background:var(--accent2);transform:translateY(-1px)}
+  .btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+  /* Results */
+  #results{display:none;animation:fadeUp .4s ease both}
+  .score-hero{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:20px}
+  .score-top{padding:36px 28px 24px;text-align:center;border-bottom:1px solid var(--border)}
+  .score-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+  .score-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px;border:3px solid var(--accent);background:var(--accent-bg)}
+  .score-num{font-family:'IBM Plex Mono',monospace;font-size:42px;font-weight:600;line-height:1;letter-spacing:-2px}
+  .score-den{font-size:12px;color:var(--text3);margin-top:3px}
+  .score-grade{font-size:21px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+  .score-desc{font-size:14px;color:var(--text2);max-width:440px;margin:0 auto;line-height:1.65}
+
+  .cat-results{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+  .cat-r{padding:16px 18px;border-right:1px solid var(--border);text-align:center}
+  .cat-r:last-child{border-right:none}
+  .cat-r-name{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+  .cat-r-score{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;margin-bottom:2px}
+  .cat-r-label{font-size:10px;color:var(--text3);margin-bottom:5px}
+  .cat-bar{height:3px;background:var(--border2);border-radius:99px;overflow:hidden}
+  .cat-fill{height:100%;border-radius:99px;transition:width .7s ease}
+
+  .fixes-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+  .fixes-header{padding:14px 22px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:8px}
+  .fixes-header i{color:var(--accent)}
+  .fix-item{display:flex;align-items:flex-start;gap:14px;padding:16px 22px;border-bottom:1px solid var(--border);transition:background .15s ease}
+  .fix-item:last-child{border-bottom:none}
+  .fix-item:hover{background:var(--surface2)}
+  .fix-badge{padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;flex-shrink:0;margin-top:3px;white-space:nowrap}
+  .fix-p1{background:rgba(248,113,113,.12);color:#F87171;border:1px solid rgba(248,113,113,.3)}
+  .fix-p2{background:rgba(240,180,41,.12);color:#F0B429;border:1px solid rgba(240,180,41,.3)}
+  .fix-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
+  .fix-desc{font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:7px}
+  .fix-action{font-size:12px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:5px}
+
+  .retake-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;font-family:'Sora',sans-serif;transition:all .15s ease}
+  .retake-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+
+  .cta-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;margin-bottom:20px}
+  .cta-divider{display:flex;align-items:center;gap:16px;margin:28px 0}
+  .cta-divider::before,.cta-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+  .cta-divider span{font-size:12px;color:var(--text3)}
+  .kofi-block,.product-block{max-width:460px;margin:0 auto}
+  .kofi-block h3,.product-block h3{font-size:20px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+  .kofi-block p,.product-block p{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s ease;border:none;font-family:'Sora',sans-serif}
+  .btn:active{transform:scale(.98)}
+  .btn-outline{border:1px solid var(--border2);color:var(--text2);background:transparent}
+  .btn-outline:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+  .btn-primary{background:var(--accent);color:#080C10}
+  .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(52,211,153,.25)}
+  .product-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;text-align:left;max-width:320px;margin-left:auto;margin-right:auto}
+  .feat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+  .feat i{color:var(--success);font-size:11px}
+  .btn-sub{display:block;font-size:11px;color:var(--text3);margin-top:10px}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-logo{font-size:14px;font-weight:700;color:var(--text2);text-decoration:none;transition:color .15s ease}
+  .footer-logo:hover{color:var(--accent)}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+  .footer-links a{font-size:12px;color:var(--text3);text-decoration:none;transition:color .15s ease}
+  .footer-links a:hover{color:var(--accent)}
+  .footer-copy{font-size:12px;color:var(--text3)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:680px){
+    .q-text{font-size:15px}
+    .cat-results{grid-template-columns:1fr 1fr}
+    .cat-r:nth-child(3){border-top:1px solid var(--border);border-right:none}
+    .cta-card{padding:32px 20px}
+    .cat-track{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="icon">🛠️</span>Fractional Tools</a>
+    <div class="nav-title">Operations Efficiency Score</div>
+    <div class="nav-links">
+      <a href="/blog" class="hide-mobile">Blog</a>
+      <a href="/products" class="hide-mobile">Products</a>
+      <a href="https://ko-fi.com/fractionaltools" class="hide-mobile">☕ Ko-fi</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+
+  <div class="intro-card" id="intro-card">
+    <div class="intro-icon">🔍</div>
+    <div>
+      <div class="intro-title">How to use this assessment</div>
+      <div class="intro-desc">Answer each question based on what you observe about <strong>your client's operations</strong>. Be honest — a low score is more useful than a flattering one. 12 questions · ~3 minutes · instant scored report with priority fixes.</div>
+    </div>
+  </div>
+
+  <div class="cat-track" id="cat-track">
+    <div class="cat-pill active" id="pill-0">Processes</div>
+    <div class="cat-divider"></div>
+    <div class="cat-pill" id="pill-1">People</div>
+    <div class="cat-divider"></div>
+    <div class="cat-pill" id="pill-2">Technology</div>
+    <div class="cat-divider"></div>
+    <div class="cat-pill" id="pill-3">Performance</div>
+    <div class="cat-divider"></div>
+    <div class="cat-pill" id="pill-4">Finance Ops</div>
+    <div class="cat-divider"></div>
+    <div class="cat-pill" id="pill-5">Scale</div>
+  </div>
+
+  <div class="progress-bar" id="progress-bar">
+    <span class="progress-label">Operations Audit</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:8.33%"></div></div>
+    <span class="progress-count" id="progress-count">1 / 12</span>
+  </div>
+
+  <div id="questions">
+
+    <!-- Q1: PROCESSES -->
+    <div class="question-card active" data-q="0" data-cat="0">
+      <div class="q-top"><span class="q-cat-badge">Processes</span><span class="q-number">Question 1 of 12</span></div>
+      <div class="q-text">How well documented are the client's core business processes?</div>
+      <div class="q-context">💡 Undocumented processes create dependency on individuals, inconsistent output, and painful onboarding. A business that relies on institutional memory — not documented systems — cannot scale.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,0)"><div class="option-score">1</div>No documented processes — everything lives in people's heads</div>
+        <div class="option" data-score="2" onclick="sel(this,0)"><div class="option-score">2</div>A few processes documented but most are informal</div>
+        <div class="option" data-score="3" onclick="sel(this,0)"><div class="option-score">3</div>Core processes documented but not consistently followed</div>
+        <div class="option" data-score="4" onclick="sel(this,0)"><div class="option-score">4</div>Key processes fully documented, version-controlled, and actively maintained</div>
+      </div>
+      <div class="q-nav"><div></div><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-0" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q2: PROCESSES -->
+    <div class="question-card" data-q="1" data-cat="0">
+      <div class="q-top"><span class="q-cat-badge">Processes</span><span class="q-number">Question 2 of 12</span></div>
+      <div class="q-text">How consistently are processes followed across the team — or does every person do things their own way?</div>
+      <div class="q-context">💡 Documented processes only have value if they're followed. Inconsistent execution leads to variable quality, customer complaints, and operational chaos as the team grows.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,1)"><div class="option-score">1</div>Every person does things their own way — no standardization</div>
+        <div class="option" data-score="2" onclick="sel(this,1)"><div class="option-score">2</div>Some standards exist but compliance is low</div>
+        <div class="option" data-score="3" onclick="sel(this,1)"><div class="option-score">3</div>Most team members follow the defined processes most of the time</div>
+        <div class="option" data-score="4" onclick="sel(this,1)"><div class="option-score">4</div>High process compliance — deviations are flagged and addressed quickly</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-1" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q3: PEOPLE -->
+    <div class="question-card" data-q="2" data-cat="1">
+      <div class="q-top"><span class="q-cat-badge">People</span><span class="q-number">Question 3 of 12</span></div>
+      <div class="q-text">How clearly defined are roles, responsibilities, and accountability across the team?</div>
+      <div class="q-context">💡 In most small businesses, everyone does a bit of everything. This works at 5 people and breaks at 15. Clear role definitions prevent overlap, gaps, and the "I thought someone else was handling that" problem.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,2)"><div class="option-score">1</div>Roles are completely unclear — everyone does everything</div>
+        <div class="option" data-score="2" onclick="sel(this,2)"><div class="option-score">2</div>Informal role clarity but significant overlap and gaps</div>
+        <div class="option" data-score="3" onclick="sel(this,2)"><div class="option-score">3</div>Roles defined but some gaps and accountability issues remain</div>
+        <div class="option" data-score="4" onclick="sel(this,2)"><div class="option-score">4</div>Clear job descriptions, ownership matrix, and accountability system in place</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-2" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q4: PEOPLE -->
+    <div class="question-card" data-q="3" data-cat="1">
+      <div class="q-top"><span class="q-cat-badge">People</span><span class="q-number">Question 4 of 12</span></div>
+      <div class="q-text">How effective is the onboarding process for new team members?</div>
+      <div class="q-context">💡 Poor onboarding is one of the most expensive operational problems. A new hire who takes 6 months to reach full productivity versus 6 weeks costs the business 20 weeks of output — and raises turnover risk.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,3)"><div class="option-score">1</div>No onboarding process — new hires figure it out themselves</div>
+        <div class="option" data-score="2" onclick="sel(this,3)"><div class="option-score">2</div>Informal onboarding that varies by manager or department</div>
+        <div class="option" data-score="3" onclick="sel(this,3)"><div class="option-score">3</div>Structured onboarding exists but could be faster and more complete</div>
+        <div class="option" data-score="4" onclick="sel(this,3)"><div class="option-score">4</div>Documented onboarding program — new hires are productive within a defined target timeframe</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-3" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q5: TECHNOLOGY -->
+    <div class="question-card" data-q="4" data-cat="2">
+      <div class="q-top"><span class="q-cat-badge">Technology</span><span class="q-number">Question 5 of 12</span></div>
+      <div class="q-text">How well does the current tech stack support day-to-day operations — or does it create friction?</div>
+      <div class="q-context">💡 The right tools eliminate manual work, reduce errors, and give leaders visibility. The wrong tools create data silos, duplicate entry, and frustration. Common sign of a broken stack: employees using spreadsheets to compensate for a failing system.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,4)"><div class="option-score">1</div>Tools are fragmented, outdated, or create more work than they save</div>
+        <div class="option" data-score="2" onclick="sel(this,4)"><div class="option-score">2</div>Core tools in place but significant manual workarounds required</div>
+        <div class="option" data-score="3" onclick="sel(this,4)"><div class="option-score">3</div>Tools generally fit for purpose with minor friction points</div>
+        <div class="option" data-score="4" onclick="sel(this,4)"><div class="option-score">4</div>Integrated tech stack that automates routine work and gives clear operational visibility</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-4" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q6: TECHNOLOGY -->
+    <div class="question-card" data-q="5" data-cat="2">
+      <div class="q-top"><span class="q-cat-badge">Technology</span><span class="q-number">Question 6 of 12</span></div>
+      <div class="q-text">How much repetitive, manual work is still being done that could be automated?</div>
+      <div class="q-context">💡 If team members are copying data between systems, sending the same emails repeatedly, or building the same reports manually every week — that's automation debt. Every hour of manual work is an hour not spent on high-value tasks.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,5)"><div class="option-score">1</div>Most routine work is done manually — very little is automated</div>
+        <div class="option" data-score="2" onclick="sel(this,5)"><div class="option-score">2</div>Some automation exists but significant manual work remains</div>
+        <div class="option" data-score="3" onclick="sel(this,5)"><div class="option-score">3</div>Key repetitive tasks automated, some manual work still in place</div>
+        <div class="option" data-score="4" onclick="sel(this,5)"><div class="option-score">4</div>High automation across routine tasks — team focused on high-value work</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-5" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q7: PERFORMANCE -->
+    <div class="question-card" data-q="6" data-cat="3">
+      <div class="q-top"><span class="q-cat-badge">Performance</span><span class="q-number">Question 7 of 12</span></div>
+      <div class="q-text">Does the business track operational KPIs — and are they reviewed and acted on regularly?</div>
+      <div class="q-context">💡 You can't manage what you don't measure. Operational KPIs might include: on-time delivery rate, customer response time, error rate, utilization rate, or cost per unit. If leaders don't know the numbers, they can't improve them.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,6)"><div class="option-score">1</div>No operational KPIs tracked — management is based on gut feel</div>
+        <div class="option" data-score="2" onclick="sel(this,6)"><div class="option-score">2</div>Some metrics tracked but not reviewed consistently</div>
+        <div class="option" data-score="3" onclick="sel(this,6)"><div class="option-score">3</div>Regular KPI review but not all metrics tied to decisions</div>
+        <div class="option" data-score="4" onclick="sel(this,6)"><div class="option-score">4</div>Clear operational dashboard reviewed weekly — KPIs drive decisions and improvement</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-6" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q8: PERFORMANCE -->
+    <div class="question-card" data-q="7" data-cat="3">
+      <div class="q-top"><span class="q-cat-badge">Performance</span><span class="q-number">Question 8 of 12</span></div>
+      <div class="q-text">How effective are the regular team meetings and communication rhythms?</div>
+      <div class="q-context">💡 Meetings without agendas, decisions, or follow-through are the biggest time thief in most businesses. Healthy operational cadence means: weekly team standups, monthly leadership reviews, and clear decisions recorded and acted on.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,7)"><div class="option-score">1</div>Meetings are ad hoc, lack agendas, and rarely produce decisions</div>
+        <div class="option" data-score="2" onclick="sel(this,7)"><div class="option-score">2</div>Regular meetings exist but often run over time without clear outcomes</div>
+        <div class="option" data-score="3" onclick="sel(this,7)"><div class="option-score">3</div>Structured meetings with agendas and most actions followed up</div>
+        <div class="option" data-score="4" onclick="sel(this,7)"><div class="option-score">4</div>Effective meeting cadence — agendas, decisions recorded, owners assigned, followed up</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-7" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q9: FINANCE OPS -->
+    <div class="question-card" data-q="8" data-cat="4">
+      <div class="q-top"><span class="q-cat-badge">Finance Ops</span><span class="q-number">Question 9 of 12</span></div>
+      <div class="q-text">How well managed are the client's operational finances — budgets, forecasts, and cost controls?</div>
+      <div class="q-context">💡 Operational finance is not about accounting — it's about knowing where the money goes, whether costs are under control, and whether the business is operating within its budget. Surprises at month-end are a sign of poor operational finance hygiene.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,8)"><div class="option-score">1</div>No budget or financial oversight — spending is reactive</div>
+        <div class="option" data-score="2" onclick="sel(this,8)"><div class="option-score">2</div>Budget exists but is rarely reviewed or enforced</div>
+        <div class="option" data-score="3" onclick="sel(this,8)"><div class="option-score">3</div>Regular budget reviews with most spending tracked</div>
+        <div class="option" data-score="4" onclick="sel(this,8)"><div class="option-score">4</div>Tight budget management — monthly reviews, variance analysis, cost control in place</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-8" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q10: FINANCE OPS -->
+    <div class="question-card" data-q="9" data-cat="4">
+      <div class="q-top"><span class="q-cat-badge">Finance Ops</span><span class="q-number">Question 10 of 12</span></div>
+      <div class="q-text">How efficient is the client's invoicing, collections, and cash flow management?</div>
+      <div class="q-context">💡 Many profitable businesses run into cash flow problems not because they lack revenue — but because invoicing is slow, collections are chased manually, and payment terms are not enforced. Cash flow problems kill businesses that look healthy on paper.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,9)"><div class="option-score">1</div>Invoicing is slow, collections are manual, cash flow is constantly stressed</div>
+        <div class="option" data-score="2" onclick="sel(this,9)"><div class="option-score">2</div>Invoicing done but follow-up on late payments is inconsistent</div>
+        <div class="option" data-score="3" onclick="sel(this,9)"><div class="option-score">3</div>Invoicing and collections managed reasonably with minor delays</div>
+        <div class="option" data-score="4" onclick="sel(this,9)"><div class="option-score">4</div>Automated invoicing, clear payment terms enforced, cash flow forecasted monthly</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-9" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q11: SCALE -->
+    <div class="question-card" data-q="10" data-cat="5">
+      <div class="q-top"><span class="q-cat-badge">Scale</span><span class="q-number">Question 11 of 12</span></div>
+      <div class="q-text">Can the client's operations handle 2x the current volume without breaking down?</div>
+      <div class="q-context">💡 The most important question a COO asks about any system is: does this scale? If doubling revenue requires doubling headcount, the business model is not scalable. Scalable operations use systems, automation, and leverage — not just more people.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,10)"><div class="option-score">1</div>Operations would break immediately at 2x — not remotely scalable</div>
+        <div class="option" data-score="2" onclick="sel(this,10)"><div class="option-score">2</div>Could handle modest growth but major bottlenecks would appear quickly</div>
+        <div class="option" data-score="3" onclick="sel(this,10)"><div class="option-score">3</div>Could scale with some investment in systems and people</div>
+        <div class="option" data-score="4" onclick="sel(this,10)"><div class="option-score">4</div>Highly scalable — systems and processes built to handle significant growth</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next" onclick="nxt()" id="btn-next-10" disabled>Next <i class="fa-solid fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Q12: SCALE -->
+    <div class="question-card" data-q="11" data-cat="5">
+      <div class="q-top"><span class="q-cat-badge">Scale</span><span class="q-number">Question 12 of 12</span></div>
+      <div class="q-text">How dependent is the business on specific individuals — would operations break if a key person left tomorrow?</div>
+      <div class="q-context">💡 Key person dependency is one of the highest operational risks in SMBs. If the answer to "what happens if [person] leaves?" is "we'd be in serious trouble" — that's a critical risk that needs to be addressed before it becomes a crisis.</div>
+      <div class="options">
+        <div class="option" data-score="1" onclick="sel(this,11)"><div class="option-score">1</div>Critically dependent — 1–2 people leaving would seriously damage operations</div>
+        <div class="option" data-score="2" onclick="sel(this,11)"><div class="option-score">2</div>Significant dependency on key individuals with limited documentation</div>
+        <div class="option" data-score="3" onclick="sel(this,11)"><div class="option-score">3</div>Some dependency but key processes are documented and cross-trained</div>
+        <div class="option" data-score="4" onclick="sel(this,11)"><div class="option-score">4</div>Low dependency — knowledge is documented, teams are cross-trained, no single points of failure</div>
+      </div>
+      <div class="q-nav"><button class="btn-nav btn-back" onclick="prv()"><i class="fa-solid fa-arrow-left"></i> Back</button><button class="btn-nav btn-next btn-primary" onclick="showResults()" id="btn-next-11" disabled>See My Score <i class="fa-solid fa-chart-bar"></i></button></div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <div class="score-hero">
+      <div class="score-top">
+        <div class="score-eyebrow">Operations Efficiency Score</div>
+        <div class="score-circle" id="score-circle">
+          <div class="score-num" id="score-num">0</div>
+          <div class="score-den">/ 48</div>
+        </div>
+        <div class="score-grade" id="score-grade">—</div>
+        <div class="score-desc" id="score-desc">—</div>
+      </div>
+      <div class="cat-results">
+        <div class="cat-r">
+          <div class="cat-r-name">Processes</div>
+          <div class="cat-r-score" id="cat-p">0 / 8</div>
+          <div class="cat-r-label" id="cat-pl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-pf" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">People</div>
+          <div class="cat-r-score" id="cat-pe">0 / 8</div>
+          <div class="cat-r-label" id="cat-pel">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-pef" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">Technology</div>
+          <div class="cat-r-score" id="cat-t">0 / 8</div>
+          <div class="cat-r-label" id="cat-tl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-tf" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">Performance</div>
+          <div class="cat-r-score" id="cat-perf">0 / 8</div>
+          <div class="cat-r-label" id="cat-perfl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-perff" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r">
+          <div class="cat-r-name">Finance Ops</div>
+          <div class="cat-r-score" id="cat-f">0 / 8</div>
+          <div class="cat-r-label" id="cat-fl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-ff" style="width:0%"></div></div>
+        </div>
+        <div class="cat-r" style="border-right:none">
+          <div class="cat-r-name">Scale</div>
+          <div class="cat-r-score" id="cat-sc">0 / 8</div>
+          <div class="cat-r-label" id="cat-scl">—</div>
+          <div class="cat-bar"><div class="cat-fill" id="cat-scf" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixes-card">
+      <div class="fixes-header"><i class="fa-solid fa-triangle-exclamation"></i> Priority Fixes</div>
+      <div id="fixes-list"></div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <button class="retake-btn" onclick="retake()"><i class="fa-solid fa-rotate-left"></i> Retake the Assessment</button>
+    </div>
+
+    <div class="cta-card">
+      <div class="kofi-block">
+        <h3>☕ Found this useful?</h3>
+        <p>This assessment is completely free. If it helped you identify operational gaps faster, a coffee keeps the tools coming.</p>
+        <a href="https://ko-fi.com/fractionaltools" class="btn btn-outline"><i class="fa-solid fa-mug-hot"></i> Buy me a coffee</a>
+      </div>
+      <div class="cta-divider"><span>or go deeper</span></div>
+      <div class="product-block">
+        <h3>Want the complete COO system?</h3>
+        <p>This score shows where the gaps are. The full Fractional COO Toolkit gives you every template, playbook, and framework to fix them and run a professional COO practice.</p>
+        <div class="product-feats">
+          <div class="feat"><i class="fa-solid fa-check"></i> Operations Health Audit — 56 questions, 8 categories</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> Monthly Operations Dashboard + COO Pricing Calculator</div>
+          <div class="feat"><i class="fa-solid fa-check"></i> 30-60-90 Day COO Onboarding Plan + Discovery Playbook</div>
+        </div>
+        <a href="https://fractionaltools.gumroad.com/l/fractional-coo-toolkit" class="btn btn-primary">Get the COO Toolkit →</a>
+        <span class="btn-sub">One-time purchase · Instant access · 7-day money-back guarantee</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">🛠️ Fractional Tools</a>
+    <div class="footer-links">
+      <a href="/">Tools</a>
+      <a href="/products">Products</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="https://ko-fi.com/fractionaltools">☕ Ko-fi</a>
+    </div>
+    <span class="footer-copy">© 2026 fractionaltools.com · Built by Mohamed.B</span>
+  </div>
+</footer>
+
+<script>
+  let cQ = 0;
+  const sc = new Array(12).fill(0);
+  const qCat = [0,0,1,1,2,2,3,3,4,4,5,5];
+
+  function sel(el, qi) {
+    el.closest('.question-card').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    sc[qi] = parseInt(el.dataset.score);
+    document.getElementById('btn-next-' + qi).disabled = false;
+  }
+
+  function nxt() {
+    if (!sc[cQ]) return;
+    document.querySelectorAll('.question-card')[cQ].classList.remove('active');
+    cQ++;
+    if (cQ < 12) { document.querySelectorAll('.question-card')[cQ].classList.add('active'); upd(); }
+  }
+
+  function prv() {
+    if (cQ === 0) return;
+    document.querySelectorAll('.question-card')[cQ].classList.remove('active');
+    cQ--;
+    document.querySelectorAll('.question-card')[cQ].classList.add('active');
+    upd();
+  }
+
+  function upd() {
+    const pct = ((cQ + 1) / 12) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = (cQ + 1) + ' / 12';
+    const ap = qCat[cQ];
+    for (let i = 0; i < 6; i++) {
+      const p = document.getElementById('pill-' + i);
+      p.className = 'cat-pill' + (i < ap ? ' done' : i === ap ? ' active' : '');
+    }
+  }
+
+  function cc(pct) { return pct >= 75 ? '#34D399' : pct >= 50 ? '#F0B429' : '#F87171'; }
+  function cl(pct) { return pct >= 75 ? 'Strong' : pct >= 50 ? 'Acceptable' : 'Needs Work'; }
+
+  function showResults() {
+    if (!sc[11]) return;
+    ['questions','progress-bar','cat-track','intro-card'].forEach(id => document.getElementById(id).style.display = 'none');
+    document.getElementById('results').style.display = 'block';
+
+    const total = sc.reduce((a, b) => a + b, 0);
+    document.getElementById('score-num').textContent = total;
+
+    let grade, desc, color, bg;
+    if (total >= 43)      { grade = 'Operations are Strong';                color = '#34D399'; bg = 'rgba(52,211,153,0.1)';  desc = 'The operational engine is running well. Focus on incremental optimization and preparing for the next growth phase.'; }
+    else if (total >= 33) { grade = 'Solid — Room to Optimize';             color = '#F0B429'; bg = 'rgba(240,180,41,0.1)';  desc = 'Good operational foundation with clear gaps. The priority fixes below will improve efficiency without major restructuring.'; }
+    else if (total >= 22) { grade = 'Significant Operational Gaps';         color = '#FB923C'; bg = 'rgba(251,146,60,0.1)';  desc = 'Multiple operational weaknesses are slowing growth and creating risk. Address the priority fixes before scaling.'; }
+    else                  { grade = 'Critical — Operations Need Rebuilding'; color = '#F87171'; bg = 'rgba(248,113,113,0.1)'; desc = 'Fundamental operational gaps are limiting the business and creating serious risk. Start with the top priority fixes immediately.'; }
+
+    document.getElementById('score-grade').textContent = grade;
+    document.getElementById('score-grade').style.color = color;
+    document.getElementById('score-desc').textContent = desc;
+    const circle = document.getElementById('score-circle');
+    circle.style.borderColor = color; circle.style.background = bg;
+    document.getElementById('score-num').style.color = color;
+
+    const cats = [
+      { s:sc[0]+sc[1],   max:8,  scoreId:'cat-p',    labelId:'cat-pl',    fillId:'cat-pf'   },
+      { s:sc[2]+sc[3],   max:8,  scoreId:'cat-pe',   labelId:'cat-pel',   fillId:'cat-pef'  },
+      { s:sc[4]+sc[5],   max:8,  scoreId:'cat-t',    labelId:'cat-tl',    fillId:'cat-tf'   },
+      { s:sc[6]+sc[7],   max:8,  scoreId:'cat-perf', labelId:'cat-perfl', fillId:'cat-perff'},
+      { s:sc[8]+sc[9],   max:8,  scoreId:'cat-f',    labelId:'cat-fl',    fillId:'cat-ff'   },
+      { s:sc[10]+sc[11], max:8,  scoreId:'cat-sc',   labelId:'cat-scl',   fillId:'cat-scf'  },
+    ];
+    cats.forEach(c => {
+      const p = (c.s / c.max) * 100, col = cc(p);
+      document.getElementById(c.scoreId).textContent = c.s + ' / ' + c.max;
+      document.getElementById(c.scoreId).style.color = col;
+      document.getElementById(c.labelId).textContent = cl(p);
+      document.getElementById(c.labelId).style.color = col;
+      document.getElementById(c.fillId).style.width = p + '%';
+      document.getElementById(c.fillId).style.background = col;
+    });
+
+    const fixMap = [
+      { qi:0,  s:sc[0],  title:'Document your core business processes',
+        desc:'Start with the 5 processes that happen most often or have the highest cost of error. Map each one as a step-by-step checklist. Store in a shared location accessible to the whole team.',
+        action:'Deliverable: 5 core processes documented in a shared process library within 30 days.' },
+      { qi:1,  s:sc[1],  title:'Enforce process standards across the team',
+        desc:'Identify the 3 processes where people deviate most. Understand why — is the process unclear, too slow, or not practical? Fix the process first, then hold the team accountable to following it.',
+        action:'Deliverable: process compliance reviewed in weekly team meetings.' },
+      { qi:2,  s:sc[2],  title:'Define roles and create an accountability matrix',
+        desc:'For every major function, assign one owner. Use a RACI matrix (Responsible, Accountable, Consulted, Informed). Every task should have one person accountable — no shared ownership.',
+        action:'Deliverable: RACI matrix built and reviewed with the full leadership team.' },
+      { qi:3,  s:sc[3],  title:'Build a structured onboarding program',
+        desc:'Document everything a new hire needs to know in their first 30 days. Include: tools access, key processes, who to contact for what, and a 30-day milestone plan. Target: new hires productive within 30 days.',
+        action:'Deliverable: 30-day onboarding checklist live and used for next hire.' },
+      { qi:4,  s:sc[4],  title:'Audit and consolidate the tech stack',
+        desc:'List every tool being used. For each one: is it essential, redundant, or underused? Identify where data has to be entered twice or transferred manually. Remove or replace tools that create friction.',
+        action:'Deliverable: tech stack audit completed, redundant tools identified for removal.' },
+      { qi:5,  s:sc[5],  title:'Map and automate the top 5 repetitive tasks',
+        desc:'Ask every team member: what do you do every week that feels like a waste of time? List the top 5 answers. Use tools like Zapier, Make, or built-in automations to eliminate at least 3 of them.',
+        action:'Deliverable: 3 manual tasks automated within 60 days.' },
+      { qi:6,  s:sc[6],  title:'Build an operational KPI dashboard',
+        desc:'Choose 5–8 operational metrics that matter most. Set targets for each. Build a simple weekly dashboard (even a spreadsheet works). Review it in every leadership meeting and act on variances.',
+        action:'Deliverable: operational dashboard built, reviewed in weekly leadership meeting.' },
+      { qi:7,  s:sc[7],  title:'Redesign the meeting cadence',
+        desc:'Audit every recurring meeting: does it have an agenda? Does it produce decisions? Cancel any meeting that doesn\'t. Implement a daily standup (15 min), weekly team meeting (45 min), monthly leadership review (90 min).',
+        action:'Deliverable: meeting calendar redesigned, agendas and decision logs in place.' },
+      { qi:8,  s:sc[8],  title:'Implement a monthly budget review process',
+        desc:'Set an annual budget by department. Review actuals vs budget every month. Assign a budget owner for each cost centre. Any variance above 10% requires a written explanation.',
+        action:'Deliverable: monthly budget review meeting scheduled, variance process documented.' },
+      { qi:9,  s:sc[9],  title:'Automate invoicing and tighten collections',
+        desc:'Move to automated invoicing on delivery (not end of month). Set payment terms clearly on every invoice. Set up automated payment reminders at 7, 14, and 30 days overdue. Review aged debtors weekly.',
+        action:'Deliverable: automated invoicing live, collections process documented.' },
+      { qi:10, s:sc[10], title:'Identify and fix the top 3 scaling bottlenecks',
+        desc:'Ask: what breaks first if we double revenue next quarter? List the top 3 answers. For each, determine whether the fix is a process change, a technology upgrade, or a hire. Sequence them by impact.',
+        action:'Deliverable: scaling bottleneck analysis completed, top 3 fixes roadmapped.' },
+      { qi:11, s:sc[11], title:'Eliminate key person dependencies',
+        desc:'Identify the 2–3 people the business is most dependent on. For each: document their critical knowledge, cross-train at least one other person, and ensure their key processes are documented.',
+        action:'Deliverable: knowledge transfer plan created for all critical role holders.' },
+    ];
+
+    const fixes = fixMap.filter(f => f.s <= 2).sort((a, b) => a.s - b.s).slice(0, 5);
+    const list = document.getElementById('fixes-list');
+    list.innerHTML = '';
+
+    if (!fixes.length) {
+      list.innerHTML = '<div style="padding:18px 22px;font-size:14px;color:var(--text2)">🟢 No critical operational gaps found. Focus on incremental optimization and scaling preparation.</div>';
+    } else {
+      fixes.forEach(f => {
+        const pc = f.s === 1 ? 'fix-p1' : 'fix-p2';
+        const pl = f.s === 1 ? 'Critical' : 'High';
+        const actionColor = f.s === 1 ? '#F87171' : '#F0B429';
+        list.innerHTML += `<div class="fix-item"><span class="fix-badge ${pc}">${pl}</span><div><div class="fix-title">${f.title}</div><div class="fix-desc">${f.desc}</div><div class="fix-action" style="color:${actionColor}"><i class="fa-solid fa-arrow-right"></i> ${f.action}</div></div></div>`;
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function retake() {
+    cQ = 0; sc.fill(0);
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    document.querySelectorAll('.question-card').forEach((c, i) => c.classList.toggle('active', i === 0));
+    document.getElementById('results').style.display = 'none';
+    ['questions','progress-bar','cat-track','intro-card'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = id === 'cat-track' ? 'flex' : id === 'intro-card' ? 'flex' : id === 'progress-bar' ? 'flex' : 'block';
+    });
+    upd();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleTheme() {
+    const body = document.body, btn = document.getElementById('theme-btn');
+    body.classList.contains('light')
+      ? (body.classList.remove('light'), btn.textContent='🌙', localStorage.setItem('ft-theme','dark'))
+      : (body.classList.add('light'),    btn.textContent='☀️', localStorage.setItem('ft-theme','light'));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('ft-theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀️';
+    }
+  });
+</script>
+</body>
+</html>
